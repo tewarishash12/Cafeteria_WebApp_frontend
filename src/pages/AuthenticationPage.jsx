@@ -1,20 +1,37 @@
-import React, { useEffect } from "react";
-import { NavLink } from "react-router";
+import axios from "axios";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router";
 
+const AUTH_LINK = import.meta.env.VITE_AUTH_API_URL;
 export const RegisterPage = () => {
-    
-    useEffect(()=>{
+    const navigate = useNavigate()
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNo, setPhoneNo] = useState('');
+    const [password, setPassword] = useState('');
 
-    })
+    async function handleRegistration(e) {
+        e.preventDefault();
+        try {
+            const res = await axios.post(`${AUTH_LINK}/auth/register`, { username, email, phoneNo, password }, {
+                headers: { "Content-Type": "application/json" }
+            });
+            navigate("/auth/login");
+        } catch (err) {
+            console.error(err.message)
+        }
+    }
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black">
             <div className="p-8 rounded-3xl shadow-lg w-full max-w-sm relative">
                 <h1 className="text-white text-2xl font-semibold text-center mb-6">Sign Up</h1>
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleRegistration}>
                     {/* Username */}
                     <div>
                         <input
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
                             type="text"
                             placeholder="Username"
                             className="w-full px-4 py-2 text-gray-200 bg-transparent border rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-200"
@@ -24,6 +41,8 @@ export const RegisterPage = () => {
                     {/* Email */}
                     <div>
                         <input
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
                             type="email"
                             placeholder="Email"
                             className="w-full px-4 py-2 text-gray-200 bg-transparent border rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-200"
@@ -33,6 +52,8 @@ export const RegisterPage = () => {
                     {/* phoneNo */}
                     <div>
                         <input
+                            value={phoneNo}
+                            onChange={e => setPhoneNo(e.target.value)}
                             type="text"
                             placeholder="Phone No"
                             className="w-full px-4 py-2 text-gray-200 bg-transparent border rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-200"
@@ -42,6 +63,8 @@ export const RegisterPage = () => {
                     {/* Password */}
                     <div>
                         <input
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
                             type="password"
                             placeholder="Password"
                             className="w-full px-4 py-2 text-gray-200 bg-transparent border rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-200"
@@ -70,14 +93,31 @@ export const RegisterPage = () => {
 };
 
 export const LoginPage = () => {
+    const navigate = useNavigate();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        try {
+            const res = await axios.post(`${AUTH_LINK}/auth/login`, {username,password});
+            localStorage.setItem("accessToken", res.data.access_token);
+            localStorage.setItem("refreshToken", res.data.refreshToken);
+            navigate("/");
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black">
             <div className="p-8 rounded-3xl shadow-lg w-full max-w-sm relative">
                 <h1 className="text-white text-2xl font-semibold text-center mb-6">Sign In</h1>
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleLogin}>
                     {/* Username */}
                     <div>
                         <input
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
                             type="text"
                             placeholder="Username"
                             className="w-full px-4 py-2 text-gray-200 bg-transparent border rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-200"
@@ -87,6 +127,8 @@ export const LoginPage = () => {
                     {/* Password */}
                     <div>
                         <input
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
                             type="password"
                             placeholder="Password"
                             className="w-full px-4 py-2 text-gray-200 bg-transparent border rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-200"
