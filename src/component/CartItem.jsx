@@ -10,6 +10,9 @@ function CartItem({ items }) {
     async function updateQuantity(count, id) {
         try {
             dispatch(changeQuantity({ count: count, id: id }))
+            await axios.patch(`${MAIN_LINK}/cart/updatecart`, {dish_id:id, count:count },{
+                headers: {Authorization : `Bearer ${localStorage.getItem('accessToken')}`}
+            })
         } catch (err) {
             console.error(err.message);
         }
@@ -18,7 +21,7 @@ function CartItem({ items }) {
     async function deleteItem(id) {
         try {
             dispatch(removeItem({id:id}))
-            const res = await axios.patch(`${MAIN_LINK}/cart/removefromcart`,{dish_id: id}, {
+            await axios.patch(`${MAIN_LINK}/cart/removefromcart`,{dish_id: id}, {
                 headers : {Authorization: `Bearer ${localStorage.getItem('accessToken')}`}
             })
         } catch (err) {
