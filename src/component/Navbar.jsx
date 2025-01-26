@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router';
 import { FaShoppingBag } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const length = useSelector(state=>state?.cart?.items?.length || 0)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -57,8 +59,9 @@ const Navbar = () => {
                                 <button className="text-gray-900 dark:text-white hover:text-blue-600">
                                     Signout
                                 </button>
-                                <NavLink to="/cart">
-                                    <FaShoppingBag />
+                                <NavLink to="/cart" className="flex relative">
+                                    <FaShoppingBag /> 
+                                    <span className='text-sm text-orange-50 bg-amber-700 rounded-full w-5 h-5 px-1.5 font-bold absolute -top-4 left-2'>{length}</span>
                                 </NavLink>
                             </>
                             :
