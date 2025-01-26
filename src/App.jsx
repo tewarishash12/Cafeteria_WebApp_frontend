@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { setCurrentUser } from './slices/authSlice'
+import { setCart } from './slices/cartSlice'
 
 function layout(element) {
   return (
@@ -28,7 +29,8 @@ function App() {
         const res = await axios.get(`${MAIN_LINK}/users/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
-        dispatch(setCurrentUser({ username: res.data.username }));
+        dispatch(setCurrentUser({ userInfo: res.data }));
+        dispatch(setCart({cart: res.data.cart}))
       } catch (err) {
         console.error("User is not logged in into the website")
       }
