@@ -16,7 +16,7 @@ const cartSlice = createSlice({
                 state.items.push({ item:payload.food, quantity: 1 });
         },
         removeItem: (state, { payload }) => {
-            state.items = state.items.filter(item => item._id !== payload.id);
+            state.items = state.items.filter(({item}) => item._id !== payload.id);
         },
         changeQuantity: (state,{payload}) =>{
             const cartItem = state.items.find(({item})=>item._id === payload.id);
