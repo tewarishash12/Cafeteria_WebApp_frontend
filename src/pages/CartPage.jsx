@@ -4,8 +4,7 @@ import Subtotal from '../component/SubTotal';
 import CartItem from '../component/CartItem';
 
 function CartPage() {
-  const items = useSelector(state=> state.cart.items || []);
-  console.log(items)
+  const items = useSelector(state=> state.cart.items);
 
   const calculateSubtotal = () => {
     return items.reduce((total, {item, quantity}) => total + item.price * quantity, 0);
