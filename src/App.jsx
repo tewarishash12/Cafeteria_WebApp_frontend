@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router'
 import './App.css'
 import Homepage from './pages/Homepage'
 import CartPage from './pages/CartPage'
-import Counters from './pages/Counters'
+import CounterPage from './pages/CounterPage'
 import MenuPage from './pages/MenuPage'
 import { LoginPage, RegisterPage } from './pages/AuthenticationPage'
 import Navbar from './component/Navbar'
@@ -59,7 +59,7 @@ function App() {
           <Routes>
             <Route path="/" element={layout(<Homepage />)} />
             <Route path="/cart" element={layout(<CartPage />)} />
-            <Route path="/counter" element={layout(<Counters />)} />
+            <Route path="/counter" element={layout(<CounterPage />)} />
             <Route path="/menu" element={layout(<MenuPage />)} />
             <Route path="/auth/register" element={<RegisterPage />} />
             <Route path="/auth/login" element={<LoginPage />} />
