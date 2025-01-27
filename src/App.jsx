@@ -11,6 +11,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { setCurrentUser } from './slices/authSlice'
 import { setCart } from './slices/cartSlice'
+import { setCompleteMenu } from './slices/dishSlice'
 
 function layout(element) {
   return (
@@ -22,7 +23,8 @@ function layout(element) {
 
 function App() {
   const dispatch = useDispatch();
-  const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL
+  const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
+
   useEffect(() => {
     async function me(token) {
       try {
@@ -30,13 +32,25 @@ function App() {
           headers: { Authorization: `Bearer ${token}` }
         })
         dispatch(setCurrentUser({ userInfo: res.data }));
-        dispatch(setCart({cart: res.data.cart}))
+        dispatch(setCart({ cart: res.data.cart }))
       } catch (err) {
         console.error("User is not logged in into the website")
       }
     }
     me(localStorage.getItem('accessToken'));
-  })
+  });
+
+  useEffect(() => {
+    async function fetchMenuItems() {
+      try {
+        const res = await axios.get(`${MAIN_LINK}/dish/alldishes`);
+        dispatch(setCompleteMenu({menu:res.data}));
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    fetchMenuItems();
+  });
 
   return (
     <>
