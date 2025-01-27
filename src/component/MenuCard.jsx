@@ -48,7 +48,6 @@ function MenuCard({ item }) {
                         {item.availability ? "Add to Cart" : "Out of Stock"}
                     </button>
 
-                    {/* Edit Button */}
                     <button
                         className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition"
                         onClick={() => handleEdit(item)}
