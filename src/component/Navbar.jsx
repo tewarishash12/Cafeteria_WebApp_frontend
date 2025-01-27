@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const length = useSelector(state=>state?.cart?.items?.length || 0)
+    const length = useSelector(state => state?.cart?.items?.length || 0)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -50,7 +50,7 @@ const Navbar = () => {
                         </button>
                     </div>
 
-                    <div className="hidden md:flex md:items-center md:space-x-6 mr-10">
+                    <div className="hidden md:flex md:items-center md:space-x-6 pr-10">
                         <NavLink to="/" className="text-gray-900 dark:text-white hover:text-blue-600">Home</NavLink>
                         <NavLink to="/counter" className="text-gray-900 dark:text-white hover:text-blue-600">Counters</NavLink>
                         <NavLink to="/menu" className="text-gray-900 dark:text-white hover:text-blue-600">MenuPage</NavLink>
@@ -60,7 +60,7 @@ const Navbar = () => {
                                     Signout
                                 </button>
                                 <NavLink to="/cart" className="flex relative">
-                                    <FaShoppingBag /> 
+                                    <FaShoppingBag />
                                     <span className='text-sm text-orange-50 bg-amber-700 rounded-full w-5 h-5 px-1.5 font-bold absolute -top-4 left-2'>{length}</span>
                                 </NavLink>
                             </>
@@ -76,11 +76,26 @@ const Navbar = () => {
 
             {isMenuOpen && (
                 <div className="md:hidden">
-                    <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3 bg-gray-50 dark:bg-gray-800">
-                        <a href="/" className="block text-gray-900 dark:text-white hover:text-blue-600">Home</a>
-                        <a href="/" className="block text-gray-900 dark:text-white hover:text-blue-600">Services</a>
-                        <a href="/" className="block text-gray-900 dark:text-white hover:text-blue-600">Pricing</a>
-                        <a href="/" className="block text-gray-900 dark:text-white hover:text-blue-600">Contact</a>
+                    <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3 bg-gray-50 dark:bg-gray-800 flex flex-col">
+                        <NavLink to="/" className="text-gray-900 dark:text-white hover:text-blue-600">Home</NavLink>
+                        <NavLink to="/counter" className="text-gray-900 dark:text-white hover:text-blue-600">Counters</NavLink>
+                        <NavLink to="/menu" className="text-gray-900 dark:text-white hover:text-blue-600">MenuPage</NavLink>
+                        {localStorage.getItem("refreshToken") ?
+                            <>
+                                <button className="text-gray-900 dark:text-white hover:text-blue-600">
+                                    Signout
+                                </button>
+                                <NavLink to="/cart" className="flex relative">
+                                    Cart
+                                    <span className='text-sm text-orange-50 bg-amber-700 rounded-full w-5 h-5 px-1.5 font-bold absolute -top-4 left-2'>{length}</span>
+                                </NavLink>
+                            </>
+                            :
+                            <>
+                                <NavLink to="/auth/register" className="text-gray-900 dark:text-white hover:text-blue-600">Signup</NavLink>
+                                <NavLink to="/auth/login" className="text-gray-900 dark:text-white hover:text-blue-600">Login</NavLink>
+                            </>
+                        }
                     </div>
                 </div>
             )}
