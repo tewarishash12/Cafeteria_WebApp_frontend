@@ -5,7 +5,6 @@ import { addItem } from "../slices/cartSlice";
 import MenuCard from "../component/MenuCard";
 
 function MenuPage() {
-    const dispatch = useDispatch();
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
     const [menuItems, setMenuItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -23,18 +22,6 @@ function MenuPage() {
         }
         fetchMenuItems();
     }, []);
-
-    async function handleAddToCart(e, food) {
-        e.preventDefault();
-        try {
-            const res = await axios.patch(`${MAIN_LINK}/cart/addtocart`, { dish_id: food._id }, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
-            })
-            dispatch(addItem({ food: food }))
-        } catch (err) {
-            console.error(err.message)
-        }
-    }
 
     return (
         <div className="min-h-screen p-6 bg-gray-900">

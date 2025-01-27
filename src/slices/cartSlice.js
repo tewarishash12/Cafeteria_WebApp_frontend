@@ -10,20 +10,21 @@ const cartSlice = createSlice({
             state.items = payload.cart;
         },
         addItem: (state, { payload }) => {
-            const existingItems = state.items.find(item => item._id === payload.food._id)
+            const existingItems = state.items.find(({ item }) => item._id === payload.food._id)
+            console.log(existingItems);
 
             if (!existingItems)
-                state.items.push({ item:payload.food, quantity: 1 });
+                state.items.push({ item: payload.food, quantity: 1 });
         },
         removeItem: (state, { payload }) => {
-            state.items = state.items.filter(({item}) => item._id !== payload.id);
+            state.items = state.items.filter(({ item }) => item._id !== payload.id);
         },
-        changeQuantity: (state,{payload}) =>{
-            const cartItem = state.items.find(({item})=>item._id === payload.id);
-            if(cartItem){
+        changeQuantity: (state, { payload }) => {
+            const cartItem = state.items.find(({ item }) => item._id === payload.id);
+            if (cartItem) {
                 cartItem.quantity += payload.count;
-                if(cartItem.quantity <=0)
-                    state.items = state.items.filter(({item}) => item._id !== payload.id) 
+                if (cartItem.quantity <= 0)
+                    state.items = state.items.filter(({ item }) => item._id !== payload.id)
             }
         }
     }
