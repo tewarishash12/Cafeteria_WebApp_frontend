@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import CounterCard from '../component/CounterCard';
 
-function Counters() {
+function CounterPage() {
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
     const [counters, setCounters] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -44,4 +44,4 @@ function Counters() {
     );
 }
 
-export default Counters;
+export default CounterPage;
