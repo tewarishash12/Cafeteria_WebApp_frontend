@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import CounterCard from '../component/CounterCard';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router';
 
 function CounterPage() {
-    const counters = useSelector(state=>state.counter.allCounters)
+    const counters = useSelector(state => state.counter.allCounters)
 
     return (
         <div className="p-4">
@@ -15,8 +16,15 @@ function CounterPage() {
                     {counters.map((counter) => (
                         <CounterCard key={counter._id} counter={counter} />
                     ))}
+                    <NavLink
+                        to="/counter/create"
+                        className="border border-gray-300 rounded-lg shadow-md bg-white dark:bg-gray-800 flex items-center justify-center hover:shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                        <span className="text-2xl font-bold text-gray-700 dark:text-gray-300">Add Counter</span>
+                    </NavLink>
                 </div>
             )}
+
 
             {counters.length === 0 && (
                 <p>No counters available.</p>
