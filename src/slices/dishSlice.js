@@ -12,7 +12,7 @@ const dishSlice = createSlice({
             state.filteredMenu = payload.menu;
         },
         setMenuByCounter: (state, {payload}) =>{
-            state.filteredMenu = state.fullMenu.filter(dish=> dish._id === payload._id)
+            state.filteredMenu = state.fullMenu.filter(dish=> dish.counter_id === payload.id)
         }
     }
 })

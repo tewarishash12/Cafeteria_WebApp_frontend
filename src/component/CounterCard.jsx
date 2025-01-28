@@ -1,6 +1,6 @@
 import React from 'react'
 
-function MerchantCard({merchant}) {
+function MerchantCard({ merchant }) {
     return (
         <div key={merchant._id}>
             <p><strong>Merchant Name:</strong> {merchant.username}</p>
@@ -9,10 +9,11 @@ function MerchantCard({merchant}) {
     );
 }
 
-function CounterCard({counter}) {
+function CounterCard({ counter }) {
 
     return (
-        <div key={counter._id}
+        <div
+            key={counter._id}
             className="border border-gray-300 rounded-lg p-4 shadow-md bg-white dark:bg-gray-800"
         >
             <h2 className="text-lg font-semibold mb-2">{counter.shop_name}</h2>
