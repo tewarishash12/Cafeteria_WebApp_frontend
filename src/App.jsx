@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { setCurrentUser } from './slices/authSlice'
 import { setCart } from './slices/cartSlice'
 import { setCompleteMenu } from './slices/dishSlice'
+import { setCounters } from './slices/counterSlice'
 
 function layout(element) {
   return (
@@ -44,12 +45,25 @@ function App() {
     async function fetchMenuItems() {
       try {
         const res = await axios.get(`${MAIN_LINK}/dish/alldishes`);
-        dispatch(setCompleteMenu({menu:res.data}));
+        dispatch(setCompleteMenu({menu:res.data.dishes}));
       } catch (err) {
         console.error(err.message);
       }
     }
     fetchMenuItems();
+  });
+
+  useEffect(() => {
+    async function fetchAllCounters() {
+      try {
+        const res = await axios.get(`${MAIN_LINK}/counter/`);
+        console.log(res.data)
+        dispatch(setCounters({counters:res.data.counters}));
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    fetchAllCounters();
   });
 
   return (
