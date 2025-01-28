@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Modal from './Modal';
+import axios from 'axios';
 
 function MerchantCard({ merchant }) {
     return (
@@ -10,6 +12,24 @@ function MerchantCard({ merchant }) {
 }
 
 function CounterCard({ counter }) {
+    const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [shopName, setShopName] = useState(counter.shop_name)
+
+    function handleUpdate(){
+        setShopName(shopName);
+        setIsModalOpen(true)
+    }
+
+    async function updateCounter(id) {
+        try {
+            const res = await axios.put(`${MAIN_LINK}/counter/id/${id}`, {shop_name: shopName});
+        } catch (err) {
+            console.error(err.message)
+        }
+        setIsModalOpen(false);
+    }
 
     return (
         <div
@@ -22,6 +42,43 @@ function CounterCard({ counter }) {
                     <MerchantCard key={merchant._id} merchant={merchant} />
                 ))}
             </div>
+            <div className="flex gap-2 mt-2">
+                <button
+                    onClick={() => handleUpdate()}
+                    className="bg-yellow-500 text-white px-3 py-1 rounded-lg hover:bg-yellow-600 transition"
+                >
+                    Edit
+                </button>
+                <button
+
+                    className="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition"
+                >
+                    Delete
+                </button>
+            </div>
+            {isModalOpen &&
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    <form>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-bold mb-2">Dish Name</label>
+                            <input
+                                type="text"
+                                name="dish_name"
+                                value={shopName}
+                                onChange={(e) => setShopName(e.target.value)}
+                                className="w-full px-3 py-2 border rounded-lg text-black"
+                            />
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => updateCounter(counter._id)}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                        >
+                            Save
+                        </button>
+                    </form>
+                </Modal>
+            }
         </div>
     )
 }
