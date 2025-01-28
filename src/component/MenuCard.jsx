@@ -8,6 +8,8 @@ import { setCompleteMenu } from "../slices/dishSlice";
 function MenuCard({ item }) {
     const dispatch = useDispatch();
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
+    // console.log("Line 11",item.counter_id)
+    // console.log("Line 12",item.counter_id.shop_name)
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [image, setImage] = useState(item.image);
@@ -44,7 +46,7 @@ function MenuCard({ item }) {
     async function handleEditSave(id) {
         try {
             const res = await axios.put(`${MAIN_LINK}/dish/id/${id}`, {dish_name: dish_name, description:description, price:price, availability:availability, image:image })
-            dispatch(setCompleteMenu({menu: res.data}))
+            dispatch(setCompleteMenu({menu: res.data.dishes}))
         } catch(err) {
             console.error(err.message);
         }
@@ -53,7 +55,7 @@ function MenuCard({ item }) {
 
     async function handleDelete(id){
         const res = await axios.delete(`${MAIN_LINK}/dish/id/${id}`)
-        dispatch(setCompleteMenu({menu:res.data}))
+        dispatch(setCompleteMenu({menu:res.data.dishes}))
     }
 
     return (
@@ -77,7 +79,7 @@ function MenuCard({ item }) {
                     {item.availability ? "Available" : "Out of Stock"}
                 </p>
                 <p className="text-gray-400 text-sm mt-2">
-                    Shop: <span className="font-bold">{item.counter_id.shop_name}</span>
+                    Shop: <span className="font-bold">{item.counter_id?.shop_name || ""}</span>
                 </p>
                 <div className="flex flex-wrap gap-3 mt-4">
                     <button
