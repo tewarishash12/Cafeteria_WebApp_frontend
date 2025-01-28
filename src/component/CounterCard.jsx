@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import Modal from './Modal';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setCounters } from '../slices/counterSlice';
+import { setCompleteMenu } from '../slices/dishSlice';
 
 function MerchantCard({ merchant }) {
     return (
@@ -13,6 +16,7 @@ function MerchantCard({ merchant }) {
 
 function CounterCard({ counter }) {
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
+    const dispatch = useDispatch();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [shopName, setShopName] = useState(counter.shop_name)
@@ -25,6 +29,18 @@ function CounterCard({ counter }) {
     async function updateCounter(id) {
         try {
             const res = await axios.put(`${MAIN_LINK}/counter/id/${id}`, {shop_name: shopName});
+        } catch (err) {
+            console.error(err.message)
+        }
+        setIsModalOpen(false);
+    }
+
+    async function deleteCounter(id) {
+        try {
+            const res = await axios.delete(`${MAIN_LINK}/counter/id/${id}`);
+            dispatch(setCounters({counters: res.data.counter}));
+            dispatch(setCompleteMenu({menu: res.data.dishes}));
+            console.log(res.data)
         } catch (err) {
             console.error(err.message)
         }
@@ -50,7 +66,7 @@ function CounterCard({ counter }) {
                     Edit
                 </button>
                 <button
-
+                    onClick={() => deleteCounter(counter._id)}
                     className="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition"
                 >
                     Delete
