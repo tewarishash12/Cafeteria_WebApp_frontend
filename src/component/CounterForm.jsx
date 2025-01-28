@@ -2,11 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCounters } from "../slices/counterSlice";
-import { useNavigate } from "react-router";
 
-const CounterForm = () => {
+function CounterForm({onClose}) {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
     const [merchantInfo, setMerchantInfo] = useState([]);
     const [selectedMerchants, setSelectedMerchants] = useState([]);
@@ -43,7 +41,7 @@ const CounterForm = () => {
             }
             const res = await axios.post(`${MAIN_LINK}/counter`, {merchant_id:selectedMerchants, shop_name:shopName})
             dispatch(setCounters({counters: res.data.counters}));
-            navigate("/counter");
+            onClose();
         } catch(err) {
             console.error(err.message)
         }
@@ -55,7 +53,6 @@ const CounterForm = () => {
                 <h2 className="text-white text-2xl font-bold text-center">Welcome</h2>
                 <p className="text-gray-400 text-center mb-4">Let's create your counter!</p>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Custom Multi-Select Dropdown */}
                     <div className="relative">
                         <div
                             className="w-full p-2 rounded-lg bg-gray-800 text-white cursor-pointer"
