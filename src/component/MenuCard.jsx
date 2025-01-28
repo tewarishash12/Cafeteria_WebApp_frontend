@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem } from "../slices/cartSlice";
 import Modal from "./Modal";
-import { removeMenuItems, setCompleteMenu } from "../slices/dishSlice";
+import { setCompleteMenu } from "../slices/dishSlice";
 
 function MenuCard({ item }) {
     const dispatch = useDispatch();
