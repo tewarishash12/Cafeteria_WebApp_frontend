@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addItem } from "../slices/cartSlice";
+import { addItem, removeItem } from "../slices/cartSlice";
 import Modal from "./Modal";
-import { setCompleteMenu } from "../slices/dishSlice";
+import { removeMenuItems, setCompleteMenu } from "../slices/dishSlice";
 
 function MenuCard({ item }) {
     const dispatch = useDispatch();
@@ -42,10 +42,18 @@ function MenuCard({ item }) {
     }
 
     async function handleEditSave(id) {
-        const res = await axios.put(`${MAIN_LINK}/dish/id/${id}`, {dish_name: dish_name, description:description, price:price, availability:availability, image:image })
-        console.log(res.data)
-        dispatch(setCompleteMenu({menu: res.data}))
+        try {
+            const res = await axios.put(`${MAIN_LINK}/dish/id/${id}`, {dish_name: dish_name, description:description, price:price, availability:availability, image:image })
+            dispatch(setCompleteMenu({menu: res.data}))
+        } catch(err) {
+            console.error(err.message);
+        }
         setIsModalOpen(false);
+    }
+
+    async function handleDelete(id){
+        const res = await axios.delete(`${MAIN_LINK}/dish/id/${id}`)
+        dispatch(setCompleteMenu({menu:res.data}))
     }
 
     return (
@@ -87,7 +95,7 @@ function MenuCard({ item }) {
                     </button>
                     <button
                         className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
-                        onClick={() => console.log("Delete")}
+                        onClick={() => handleDelete(item._id)}
                     >
                         Delete
                     </button>
