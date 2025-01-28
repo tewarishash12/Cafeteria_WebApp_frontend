@@ -59,21 +59,21 @@ function MenuCard({ item }) {
     }
 
     return (
-        <div className="bg-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300">
+        <div className="bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300">
             {/* Image Display */}
             <img
                 src={item.image || "https://via.placeholder.com/150"}
                 alt={item.dish_name}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-cover border-gray-700"
             />
             <div className="p-4">
                 <h2 className="text-lg font-semibold mb-2 text-white">{item.dish_name}</h2>
-                <p className="text-gray-100 text-sm mb-2">{item.description}</p>
-                <p className="text-gray-200 font-bold mb-2">Price: ₹{item.price}</p>
+                <p className="text-gray-300 text-sm mb-2">{item.description}</p>
+                <p className="text-green-400 font-semibold mb-2">Price: ₹{item.price}</p>
                 <p
                     className={`text-sm ${item.availability
-                            ? "text-green-600 font-bold"
-                            : "text-red-600 font-bold"
+                            ? "text-blue-400 italic"
+                            : "text-red-600 italic"
                         }`}
                 >
                     {item.availability ? "Available" : "Out of Stock"}
@@ -83,20 +83,20 @@ function MenuCard({ item }) {
                 </p>
                 <div className="flex flex-wrap gap-3 mt-4">
                     <button
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition"
                         onClick={(e) => handleAddToCart(e, item)}
                         disabled={!item.availability}
                     >
                         {item.availability ? "Add to Cart" : "Out of Stock"}
                     </button>
                     <button
-                        className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition"
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
                         onClick={() => handleEdit(item)}
                     >
                         Edit
                     </button>
                     <button
-                        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
                         onClick={() => handleDelete(item._id)}
                     >
                         Delete
