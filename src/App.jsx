@@ -13,6 +13,7 @@ import { setCurrentUser } from './slices/authSlice'
 import { setCart } from './slices/cartSlice'
 import { setCompleteMenu } from './slices/dishSlice'
 import { setCounters } from './slices/counterSlice'
+import CounterForm from './pages/CounterForm'
 
 function layout(element) {
   return (
@@ -57,7 +58,6 @@ function App() {
     async function fetchAllCounters() {
       try {
         const res = await axios.get(`${MAIN_LINK}/counter/`);
-        console.log(res.data)
         dispatch(setCounters({counters:res.data.counters}));
       } catch (err) {
         console.error(err.message);
@@ -77,6 +77,7 @@ function App() {
             <Route path="/menu" element={layout(<MenuPage />)} />
             <Route path="/auth/register" element={<RegisterPage />} />
             <Route path="/auth/login" element={<LoginPage />} />
+            <Route path="/counter/create" element={<CounterForm />} />
           </Routes>
         </BrowserRouter>
       </div>
