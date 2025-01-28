@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addItem, removeItem } from "../slices/cartSlice";
+import { addItem } from "../slices/cartSlice";
 import Modal from "./Modal";
 import { setCompleteMenu } from "../slices/dishSlice";
 
