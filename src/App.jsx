@@ -32,8 +32,9 @@ function App() {
         const res = await axios.get(`${MAIN_LINK}/users/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
-        dispatch(setCurrentUser({ userInfo: res.data }));
-        dispatch(setCart({ cart: res.data.cart }))
+        console.log(res.data)
+        dispatch(setCurrentUser({ userInfo: res.data.user }));
+        dispatch(setCart({ cart: res.data.user.cart }))
       } catch (err) {
         console.error("User is not logged in into the website")
       }
