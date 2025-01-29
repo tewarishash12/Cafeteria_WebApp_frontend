@@ -40,7 +40,7 @@ function App() {
       }
     }
     me(localStorage.getItem('accessToken'));
-  });
+  }, []);
 
   useEffect(() => {
     async function fetchMenuItems() {
@@ -52,7 +52,7 @@ function App() {
       }
     }
     fetchMenuItems();
-  });
+  }, []);
 
   useEffect(() => {
     async function fetchAllCounters() {
@@ -64,7 +64,7 @@ function App() {
       }
     }
     fetchAllCounters();
-  });
+  },[]);
 
   return (
     <>
