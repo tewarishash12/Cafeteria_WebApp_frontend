@@ -83,7 +83,7 @@ function MenuCard({ item }) {
                 </p>
                 <div className="flex flex-wrap gap-3 mt-4">
                     <button
-                        className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition"
+                        className={`${item.availability ? "bg-teal-500 hover:bg-teal-600 text-white cursor-pointer" : "bg-gray-500 hover:bg-gray-600 text-white cursor-not-allowed"}  px-4 py-2 rounded-lg transition`}
                         onClick={(e) => handleAddToCart(e, item)}
                         disabled={!item.availability}
                     >
