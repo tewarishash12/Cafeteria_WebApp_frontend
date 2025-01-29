@@ -29,6 +29,7 @@ function CounterCard({ counter }) {
     async function updateCounter(id) {
         try {
             const res = await axios.put(`${MAIN_LINK}/counter/id/${id}`, {shop_name: shopName});
+            dispatch(setCounters(res.data))
         } catch (err) {
             console.error(err.message)
         }

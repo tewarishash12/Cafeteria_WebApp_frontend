@@ -3,9 +3,12 @@ import React, { useEffect, useState } from 'react';
 import CounterCard from '../component/CounterCard';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router';
+import CounterForm from '../component/CounterForm';
+import Modal from '../component/Modal';
 
 function CounterPage() {
     const counters = useSelector(state => state.counter.allCounters)
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <div className="p-4">
@@ -16,14 +19,20 @@ function CounterPage() {
                     {counters.map((counter) => (
                         <CounterCard key={counter._id} counter={counter} />
                     ))}
-                    <NavLink
-                        to="/counter/create"
+                    <button
+                        onClick={() => setIsModalOpen(true)}
                         className="border border-gray-300 rounded-lg shadow-md bg-white dark:bg-gray-800 flex items-center justify-center hover:shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                        <span className="text-2xl font-bold text-gray-700 dark:text-gray-300">Add Counter</span>
-                    </NavLink>
+                        <span className="text-2xl font-bold text-gray-700 dark:text-gray-300">Add Dish</span>
+                    </button>
                 </div>
             )}
+            {isModalOpen &&
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    <h2 className="text-xl font-bold mb-4 text-black">Add a New Counter</h2>
+                    <CounterForm onClose={() => setIsModalOpen(false)} />
+                </Modal>
+            }
 
 
             {counters.length === 0 && (
