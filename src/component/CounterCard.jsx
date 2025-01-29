@@ -50,18 +50,18 @@ function CounterCard({ counter }) {
     return (
         <div
             key={counter._id}
-            className="bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-5"
+            className="bg-gray-800 border border-gray-700 rounded-xl shadow-md p-5"
         >
-            <h2 className="text-lg font-bold text-white mb-2">{counter.shop_name}</h2>
+            <h2 className="text-lg font-bold text-gray-100 mb-2">{counter.shop_name}</h2>
             <div>
                 {counter.merchant_id.map((merchant) => (
                     <MerchantCard key={merchant._id} merchant={merchant} />
                 ))}
             </div>
-            <div className="flex py-1 rounded-md text-sm font-semibold gap-2 mt-2">
+            <div className="flex py-1 rounded-full text-sm font-semibold gap-2 mt-2">
                 <button
                     onClick={() => handleUpdate()}
-                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg transition"
+                    className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded-lg transition"
                 >
                     Edit
                 </button>
