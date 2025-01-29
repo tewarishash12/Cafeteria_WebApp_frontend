@@ -32,7 +32,6 @@ function App() {
         const res = await axios.get(`${MAIN_LINK}/users/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
-        console.log(res.data)
         dispatch(setCurrentUser({ userInfo: res.data.user }));
         dispatch(setCart({ cart: res.data.user.cart }))
       } catch (err) {
