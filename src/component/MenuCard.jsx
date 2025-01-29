@@ -8,8 +8,6 @@ import { setCompleteMenu } from "../slices/dishSlice";
 function MenuCard({ item }) {
     const dispatch = useDispatch();
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
-    // console.log("Line 11",item.counter_id)
-    // console.log("Line 12",item.counter_id.shop_name)
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [image, setImage] = useState(item.image);
