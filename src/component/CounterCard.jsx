@@ -8,8 +8,8 @@ import { setCompleteMenu } from '../slices/dishSlice';
 function MerchantCard({ merchant }) {
     return (
         <div key={merchant._id}>
-            <p><strong>Merchant Name:</strong> {merchant.username}</p>
-            <p><strong>Phone:</strong> {merchant.phoneNo}</p>
+            <p className='text-lg font-semibold text-white'>Merchant Name: {merchant.username}</p>
+            <p className='text-sm text-gray-400'>Phone: {merchant.phoneNo}</p>
         </div>
     );
 }
@@ -50,24 +50,24 @@ function CounterCard({ counter }) {
     return (
         <div
             key={counter._id}
-            className="border border-gray-300 rounded-lg p-4 shadow-md bg-white dark:bg-gray-800"
+            className="border border-gray-300 rounded-lg p-6 shadow-lg bg-gray-800 "
         >
-            <h2 className="text-lg font-semibold mb-2">{counter.shop_name}</h2>
+            <h2 className="text-xl font-semibold mb-2 text-white">{counter.shop_name}</h2>
             <div className="text-sm text-gray-700 dark:text-gray-300">
                 {counter.merchant_id.map((merchant) => (
                     <MerchantCard key={merchant._id} merchant={merchant} />
                 ))}
             </div>
-            <div className="flex gap-2 mt-2">
+            <div className="flex py-1 rounded-md text-sm font-medium gap-2 mt-2">
                 <button
                     onClick={() => handleUpdate()}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded-lg hover:bg-yellow-600 transition"
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition"
                 >
                     Edit
                 </button>
                 <button
                     onClick={() => deleteCounter(counter._id)}
-                    className="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition"
+                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition"
                 >
                     Delete
                 </button>
