@@ -23,7 +23,6 @@ export default function Carousel() {
 
     return (
         <div className="relative w-[80vw] h-[80vh] overflow-hidden mt-2 rounded-lg">
-            {/* Carousel Content */}
             <Slider {...settings}>
                 {slides.map((slide, index) => (
                     <div key={index} className="relative w-full">

@@ -27,7 +27,6 @@ export const RegisterPage = () => {
             <div className="p-8 rounded-3xl shadow-lg w-full max-w-sm relative">
                 <h1 className="text-white text-2xl font-semibold text-center mb-6">Sign Up</h1>
                 <form className="space-y-4" onSubmit={handleRegistration}>
-                    {/* Username */}
                     <div>
                         <input
                             value={username}
@@ -38,7 +37,6 @@ export const RegisterPage = () => {
                         />
                     </div>
 
-                    {/* Email */}
                     <div>
                         <input
                             value={email}
@@ -49,7 +47,6 @@ export const RegisterPage = () => {
                         />
                     </div>
 
-                    {/* phoneNo */}
                     <div>
                         <input
                             value={phoneNo}
@@ -60,7 +57,6 @@ export const RegisterPage = () => {
                         />
                     </div>
 
-                    {/* Password */}
                     <div>
                         <input
                             value={password}
@@ -71,7 +67,6 @@ export const RegisterPage = () => {
                         />
                     </div>
 
-                    {/* Signup Button */}
                     <button
                         type="submit"
                         className="w-full py-2 mt-4 bg-black text-blue-300 text-lg font-bold rounded-md shadow-lg hover:bg-gray-800"
@@ -80,7 +75,6 @@ export const RegisterPage = () => {
                     </button>
                 </form>
 
-                {/* Login Link */}
                 <p className="text-center text-sm text-white mt-4">
                     Already have an account?{" "}
                     <NavLink to="/auth/login" className="underline hover:text-blue-100">
@@ -113,7 +107,6 @@ export const LoginPage = () => {
             <div className="p-8 rounded-3xl shadow-lg w-full max-w-sm relative">
                 <h1 className="text-white text-2xl font-semibold text-center mb-6">Sign In</h1>
                 <form className="space-y-4" onSubmit={handleLogin}>
-                    {/* Username */}
                     <div>
                         <input
                             value={username}
@@ -124,7 +117,6 @@ export const LoginPage = () => {
                         />
                     </div>
 
-                    {/* Password */}
                     <div>
                         <input
                             value={password}
@@ -135,7 +127,6 @@ export const LoginPage = () => {
                         />
                     </div>
 
-                    {/* Login Button */}
                     <button
                         type="submit"
                         className="w-full py-2 mt-4 bg-black text-blue-300 text-lg font-bold rounded-md shadow-lg hover:bg-gray-800"
@@ -144,7 +135,6 @@ export const LoginPage = () => {
                     </button>
                 </form>
 
-                {/* Register Link */}
                 <p className="text-center text-sm text-white mt-4">
                     Don't have an account?{" "}
                     <NavLink to="/auth/register" className="underline hover:text-blue-100">

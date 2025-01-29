@@ -4,8 +4,6 @@ import { useDispatch } from 'react-redux'
 import CartItem from './CartItem';
 
 function CartItems({ items }) {
-    
-
 
     return (
         <div className="flex-1 bg-gray-800 p-4 rounded-lg shadow-lg">

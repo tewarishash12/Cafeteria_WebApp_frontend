@@ -60,7 +60,6 @@ function MenuCard({ item }) {
 
     return (
         <div className="bg-gray-900 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-            {/* Image Display */}
             <img
                 src={item.image || "https://via.placeholder.com/150"}
                 alt={item.dish_name}

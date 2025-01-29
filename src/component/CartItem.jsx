@@ -4,7 +4,6 @@ import { changeQuantity, removeItem } from '../slices/cartSlice';
 import axios from 'axios';
 
 function CartItem({item, quantity}) {
-
     const dispatch = useDispatch();
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL
 
@@ -35,6 +34,11 @@ function CartItem({item, quantity}) {
             key={item._id}
             className="flex items-center justify-between border-b border-gray-700 py-4"
         >
+            <img
+                src={item?.image} 
+                alt={item?.dish_name} 
+                className="w-16 h-16 object-cover rounded"
+            />
             <div className="flex-1 ml-4">
                 <h2 className="text-lg font-semibold text-white">{item?.dish_name}</h2>
                 <p className="text-sm text-gray-400">{item?.description}</p>
@@ -44,7 +48,6 @@ function CartItem({item, quantity}) {
                 ₹{(item?.price || 0) * quantity}
             </p>
             <div className="flex items-center">
-                {/* Decrease Quantity Button */}
                 <button
                     onClick={() => updateQuantity(-1, item._id)}
                     className="px-2 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition"
@@ -52,7 +55,6 @@ function CartItem({item, quantity}) {
                     -
                 </button>
                 <span className="mx-2 text-white">{quantity || 0}</span>
-                {/* Increase Quantity Button */}
                 <button
                     onClick={() => updateQuantity(1, item._id)}
                     className="px-2 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 transition"
@@ -61,7 +63,6 @@ function CartItem({item, quantity}) {
                 </button>
             </div>
             <div>
-                {/* Delete Button */}
                 <button
                     onClick={() => deleteItem(item._id)}
                     className="px-4 py-2 ml-4 text-sm bg-gray-600 text-white rounded hover:bg-red-600 transition"
