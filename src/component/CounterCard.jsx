@@ -8,8 +8,8 @@ import { setCompleteMenu } from '../slices/dishSlice';
 function MerchantCard({ merchant }) {
     return (
         <div key={merchant._id}>
-            <p className='text-lg font-semibold text-white'>Merchant Name: {merchant.username}</p>
-            <p className='text-sm text-gray-400'>Phone: {merchant.phoneNo}</p>
+            <p className='text-sm text-gray-400 font-semibold'>Merchant Name: {merchant.username}</p>
+            <p className='text-sm text-gray-500'>Phone: {merchant.phoneNo}</p>
         </div>
     );
 }
@@ -50,18 +50,18 @@ function CounterCard({ counter }) {
     return (
         <div
             key={counter._id}
-            className="border border-gray-300 rounded-lg p-6 shadow-lg bg-gray-800 "
+            className="bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-5"
         >
-            <h2 className="text-xl font-semibold mb-2 text-white">{counter.shop_name}</h2>
-            <div className="text-sm text-gray-700 dark:text-gray-300">
+            <h2 className="text-lg font-bold text-white mb-2">{counter.shop_name}</h2>
+            <div>
                 {counter.merchant_id.map((merchant) => (
                     <MerchantCard key={merchant._id} merchant={merchant} />
                 ))}
             </div>
-            <div className="flex py-1 rounded-md text-sm font-medium gap-2 mt-2">
+            <div className="flex py-1 rounded-md text-sm font-semibold gap-2 mt-2">
                 <button
                     onClick={() => handleUpdate()}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition"
+                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg transition"
                 >
                     Edit
                 </button>
