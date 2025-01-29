@@ -1,15 +1,34 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { FaShoppingBag } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { removeCurrentUser } from '../slices/authSlice';
+import { emptyCart } from '../slices/cartSlice';
 
 const Navbar = () => {
+    const AUTH_LINK = import.meta.env.VITE_AUTH_API_URL;
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const length = useSelector(state => state?.cart?.items?.length || 0)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    async function handleLogout(){
+        try {
+            axios.post(`${AUTH_LINK}/auth/logout`, {token: localStorage.getItem('refreshToken')});
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('accessToken');
+            dispatch(removeCurrentUser());
+            dispatch(emptyCart());
+            navigate('/auth/login');
+        } catch(err) {
+            console.error(err.message)
+        }
+    }
 
     return (
         <nav className="overflow-hidden bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 w-full z-50">
@@ -56,8 +75,10 @@ const Navbar = () => {
                         <NavLink to="/menu" className="text-gray-900 dark:text-white hover:text-blue-600">MenuPage</NavLink>
                         {localStorage.getItem("refreshToken") ?
                             <>
-                                <button className="text-gray-900 dark:text-white hover:text-blue-600">
-                                    Signout
+                                <button
+                                onClick={handleLogout}
+                                className="text-gray-900 dark:text-white hover:text-blue-600">
+                                    Logout
                                 </button>
                                 <NavLink to="/cart" className="flex relative">
                                     <FaShoppingBag />
@@ -82,8 +103,10 @@ const Navbar = () => {
                         <NavLink to="/menu" className="text-gray-900 dark:text-white hover:text-blue-600">MenuPage</NavLink>
                         {localStorage.getItem("refreshToken") ?
                             <>
-                                <button className="text-gray-900 dark:text-white hover:text-blue-600">
-                                    Signout
+                                <button
+                                onClick={handleLogout}
+                                className="text-gray-900 dark:text-white hover:text-blue-600">
+                                    Logout
                                 </button>
                                 <NavLink to="/cart" className="flex relative">
                                     Cart
