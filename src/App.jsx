@@ -13,6 +13,7 @@ import { setCurrentUser } from './slices/authSlice'
 import { setCart } from './slices/cartSlice'
 import { setCompleteMenu } from './slices/dishSlice'
 import { setCounters } from './slices/counterSlice'
+import ProfilePage from './pages/ProfilePage'
 
 function layout(element) {
   return (
@@ -76,6 +77,7 @@ function App() {
             <Route path="/menu" element={layout(<MenuPage />)} />
             <Route path="/auth/register" element={<RegisterPage />} />
             <Route path="/auth/login" element={<LoginPage />} />
+            <Route path="/users/me" element={layout(<ProfilePage />)} />
           </Routes>
         </BrowserRouter>
       </div>
