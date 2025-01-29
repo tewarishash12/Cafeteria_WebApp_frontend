@@ -11,7 +11,6 @@ const cartSlice = createSlice({
         },
         addItem: (state, { payload }) => {
             const existingItems = state.items.find(({ item }) => item._id === payload.food._id)
-            console.log(existingItems);
 
             if (!existingItems)
                 state.items.push({ item: payload.food, quantity: 1 });

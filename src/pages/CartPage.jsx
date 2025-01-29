@@ -7,7 +7,7 @@ function CartPage() {
   const items = useSelector(state=> state.cart.items);
 
   const calculateSubtotal = () => {
-    return items.reduce((total, {item, quantity}) => total + item.price * quantity, 0);
+    return items.reduce((total, {item, quantity}) => total + (item?.price || 0) * quantity, 0);
   };
 
   return (

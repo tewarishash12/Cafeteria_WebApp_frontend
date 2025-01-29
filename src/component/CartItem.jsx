@@ -38,12 +38,12 @@ function CartItem({ items }) {
                     className="flex items-center justify-between border-b border-gray-700 py-4"
                 >
                     <div className="flex-1 ml-4">
-                        <h2 className="text-lg font-semibold text-white">{item.dish_name}</h2>
-                        <p className="text-sm text-gray-400">{item.description}</p>
-                        <p className="text-sm text-gray-400">₹{item.price}</p>
+                        <h2 className="text-lg font-semibold text-white">{item?.dish_name}</h2>
+                        <p className="text-sm text-gray-400">{item?.description}</p>
+                        <p className="text-sm text-gray-400">₹{item?.price}</p>
                     </div>
                     <p className="ml-4 text-lg font-semibold text-white">
-                        ₹{item.price * quantity}
+                        ₹{(item?.price || 0) * quantity}
                     </p>
                     <div className="flex items-center">
                         {/* Decrease Quantity Button */}
