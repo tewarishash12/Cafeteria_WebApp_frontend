@@ -29,7 +29,9 @@ function CounterCard({ counter }) {
     async function updateCounter(id) {
         try {
             const res = await axios.put(`${MAIN_LINK}/counter/id/${id}`, {shop_name: shopName});
-            dispatch(setCounters(res.data))
+            console.log(res.data.counter)
+            dispatch(setCounters({counters: res.data.counter}));
+            dispatch(setCompleteMenu({menu: res.data.dishes}));
         } catch (err) {
             console.error(err.message)
         }
@@ -41,7 +43,6 @@ function CounterCard({ counter }) {
             const res = await axios.delete(`${MAIN_LINK}/counter/id/${id}`);
             dispatch(setCounters({counters: res.data.counter}));
             dispatch(setCompleteMenu({menu: res.data.dishes}));
-            console.log(res.data)
         } catch (err) {
             console.error(err.message)
         }
