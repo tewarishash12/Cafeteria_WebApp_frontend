@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router";
+import { setCurrentUser } from "../slices/authSlice";
 
 const AUTH_LINK = import.meta.env.VITE_AUTH_API_URL;
 export const RegisterPage = () => {
@@ -88,6 +90,7 @@ export const RegisterPage = () => {
 
 export const LoginPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -97,6 +100,8 @@ export const LoginPage = () => {
             const res = await axios.post(`${AUTH_LINK}/auth/login`, {username,password});
             localStorage.setItem("accessToken", res.data.access_token);
             localStorage.setItem("refreshToken", res.data.refreshToken);
+            dispatch(setCurrentUser({user: res.data.user}))
+            console.log(res.data)
             navigate("/");
         } catch (err) {
             console.error(err.message);
