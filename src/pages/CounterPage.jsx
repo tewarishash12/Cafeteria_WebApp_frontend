@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import CounterCard from '../component/CounterCard';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router';
 import CounterForm from '../component/CounterForm';
 import Modal from '../component/Modal';
 
