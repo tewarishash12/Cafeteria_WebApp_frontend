@@ -12,6 +12,7 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const length = useSelector(state => state?.cart?.items?.length || 0)
+    const username = useSelector(state => state.auth.currentUser?.username)
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -75,6 +76,9 @@ const Navbar = () => {
                         <NavLink to="/menu" className="text-gray-900 dark:text-white hover:text-blue-600">MenuPage</NavLink>
                         {localStorage.getItem("refreshToken") ?
                             <>
+                                <NavLink to="/users/me" className="flex relative">
+                                    {username} Profile
+                                </NavLink>
                                 <button
                                 onClick={handleLogout}
                                 className="text-gray-900 dark:text-white hover:text-blue-600">
@@ -103,6 +107,9 @@ const Navbar = () => {
                         <NavLink to="/menu" className="text-gray-900 dark:text-white hover:text-blue-600">MenuPage</NavLink>
                         {localStorage.getItem("refreshToken") ?
                             <>
+                                <NavLink to="/users/me" className="flex relative">
+                                    {username} Profile
+                                </NavLink>
                                 <button
                                 onClick={handleLogout}
                                 className="text-gray-900 dark:text-white hover:text-blue-600">
