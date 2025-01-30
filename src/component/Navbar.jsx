@@ -12,9 +12,8 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const length = useSelector(state => state?.cart?.items?.length || 0)
-    const user = useSelector(state => state.auth.currentUser)
-    console.log(user)
-
+    const user = useSelector(state => state.auth.currentUser);
+    
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
