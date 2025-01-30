@@ -8,7 +8,7 @@ import { LoginPage, RegisterPage } from './pages/AuthenticationPage'
 import Navbar from './component/Navbar'
 import { useEffect } from 'react'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentUser } from './slices/authSlice'
 import { setCart } from './slices/cartSlice'
 import { setCompleteMenu } from './slices/dishSlice'
@@ -25,6 +25,7 @@ function layout(element) {
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector(state=>state.auth.currentUser)
   const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
 
   useEffect(() => {
@@ -33,14 +34,27 @@ function App() {
         const res = await axios.get(`${MAIN_LINK}/users/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
-        dispatch(setCurrentUser({ userInfo: res.data.user }));
-        dispatch(setCart({ cart: res.data.user.cart }))
+        dispatch(setCurrentUser({ user: res.data.user }))
       } catch (err) {
         console.error("User is not logged in into the website")
       }
     }
     me(localStorage.getItem('accessToken'));
   }, []);
+
+  useEffect(()=>{
+    async function cart(token) {
+      try {
+        const res = await axios.get(`${MAIN_LINK}/users/me`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        dispatch(setCart({ cart: res.data.user.cart }))
+      } catch (err) {
+        console.error("User is not logged in into the website")
+      }
+    }
+    cart(localStorage.getItem('accessToken'));
+  }, [user])
 
   useEffect(() => {
     async function fetchMenuItems() {
