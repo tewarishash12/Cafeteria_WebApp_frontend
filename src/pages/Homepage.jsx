@@ -4,7 +4,7 @@ import Categories from '../component/Categories'
 
 function Homepage() {
     return (
-        <div className='flex flex-col items-center min-w-screen'>
+        <div className='flex flex-col items-center'>
             <AutoCarousel />
             <Categories />
         </div>
