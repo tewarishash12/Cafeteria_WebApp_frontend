@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CounterCard from '../component/CounterCard';
 import { useSelector } from 'react-redux';
 import CounterForm from '../component/CounterForm';
@@ -28,7 +27,6 @@ function CounterPage() {
             )}
             {isModalOpen &&
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <h2 className="text-xl font-bold mb-4 text-black">Add a New Counter</h2>
                     <CounterForm onClose={() => setIsModalOpen(false)} />
                 </Modal>
             }

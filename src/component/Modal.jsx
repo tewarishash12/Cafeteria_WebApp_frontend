@@ -6,7 +6,7 @@ function Modal({ isOpen, onClose, children }) {
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
             <div
-                className="bg-white rounded-lg shadow-xl p-6 w-11/12 max-w-lg"
+                className="bg-gray-200 rounded-lg shadow-xl w-11/12 max-w-lg"
             >
                 <button
                     onClick={onClose}
