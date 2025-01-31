@@ -20,7 +20,7 @@ function ProfilePage() {
 
             {isModalOpen &&
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <AddMerchant  />
+                <AddMerchant onClose={() => setIsModalOpen(false)} />
             </Modal>}
         </div>
     );
