@@ -5,7 +5,7 @@ import FoodForm from "../component/FoodForm";
 import Modal from "../component/Modal";
 
 function MenuPage() {
-    const menuItems = useSelector(state => state.dish.filteredMenu);
+    const menuItems = useSelector(state => state.dish.fullMenu);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
