@@ -50,8 +50,8 @@ function CounterForm({onClose}) {
                 description: description, 
                 isActive: isActive
             });
-            
-            dispatch(setCounters({counters: res.data.counters}));
+            console.log(res.data)
+            dispatch(setCounters({counters: res?.data?.counters}));
             onClose();
         } catch(err) {
             console.error(err.message)
