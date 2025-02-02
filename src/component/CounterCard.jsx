@@ -19,19 +19,23 @@ function CounterCard({ counter }) {
     const dispatch = useDispatch();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [shopName, setShopName] = useState(counter.shop_name)
+    const [shopName, setShopName] = useState(counter.shop_name);
+    const [image, setImage] = useState(counter.image);
+    const [hours, setHours] = useState(counter.hours);
+    const [description, setDescription] = useState(counter.description);
+    const [isActive, setIsActive] = useState(counter.isActive);
 
-    function handleUpdate(){
+    function handleUpdate() {
         setShopName(shopName);
         setIsModalOpen(true)
     }
 
     async function updateCounter(id) {
         try {
-            const res = await axios.put(`${MAIN_LINK}/counter/id/${id}`, {shop_name: shopName});
+            const res = await axios.put(`${MAIN_LINK}/counter/id/${id}`, { shop_name: shopName });
             console.log(res.data.counter)
-            dispatch(setCounters({counters: res.data.counter}));
-            dispatch(setCompleteMenu({menu: res.data.dishes}));
+            dispatch(setCounters({ counters: res.data.counter }));
+            dispatch(setCompleteMenu({ menu: res.data.dishes }));
         } catch (err) {
             console.error(err.message)
         }
@@ -41,8 +45,8 @@ function CounterCard({ counter }) {
     async function deleteCounter(id) {
         try {
             const res = await axios.delete(`${MAIN_LINK}/counter/id/${id}`);
-            dispatch(setCounters({counters: res.data.counter}));
-            dispatch(setCompleteMenu({menu: res.data.dishes}));
+            dispatch(setCounters({ counters: res.data.counter }));
+            dispatch(setCompleteMenu({ menu: res.data.dishes }));
         } catch (err) {
             console.error(err.message)
         }
@@ -54,8 +58,19 @@ function CounterCard({ counter }) {
             key={counter._id}
             className="border-l-4 border-blue-500 bg-gray-800 rounded-md shadow-md p-4"
         >
-            <h2 className="text-lg font-bold text-white mb-2">{counter.shop_name}</h2>
-            <div>
+            {image && (
+                <img 
+                    src={image} 
+                    alt={shopName} 
+                    className="w-full h-40 object-cover rounded-lg mb-4" 
+                />
+            )}
+            <h2 className="text-2xl font-bold mb-2">{shopName}</h2>
+            <p className="text-sm text-gray-300 mb-2"><strong>Hours:</strong> {hours}</p>
+            <p className="text-sm text-gray-300 mb-4"><strong>Description:</strong> {description}</p>
+            <p className={`text-sm font-semibold ${isActive ? 'text-green-400' : 'text-red-400'}`}>
+                {isActive ? 'Active' : 'Inactive'}
+            </p>            <div>
                 {counter.merchant_id.map((merchant) => (
                     <MerchantCard key={merchant._id} merchant={merchant} />
                 ))}
