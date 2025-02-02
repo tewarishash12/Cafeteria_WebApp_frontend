@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Modal from './Modal';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { setCounters } from '../slices/counterSlice';
+import { removeCounter, setCounters } from '../slices/counterSlice';
 import { setCompleteMenu } from '../slices/dishSlice';
 
 function MerchantCard({ merchant }) {
@@ -49,7 +49,7 @@ function CounterCard({ counter }) {
     async function deleteCounter(id) {
         try {
             const res = await axios.delete(`${MAIN_LINK}/counter/id/${id}`);
-            dispatch(setCounters({ counters: res.data.counter }));
+            dispatch(removeCounter({id:id}))
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
         } catch (err) {
             console.error(err.message)
