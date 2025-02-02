@@ -11,7 +11,7 @@ const dishSlice = createSlice({
             state.fullMenu = payload.menu;
             state.filteredMenu = payload.menu;
         },
-        removeItem: (state, { payload }) => {
+        removeMenuItem: (state, { payload }) => {
             state.fullMenu = state.fullMenu.filter(( item ) => item._id !== payload.id);
         },
         setMenuByCounter: (state, {payload}) =>{
@@ -20,5 +20,5 @@ const dishSlice = createSlice({
     }
 })
 
-export const { setCompleteMenu, removeItem, setMenuByCounter } = dishSlice.actions;
+export const { setCompleteMenu, removeMenuItem, setMenuByCounter } = dishSlice.actions;
 export default dishSlice.reducer;

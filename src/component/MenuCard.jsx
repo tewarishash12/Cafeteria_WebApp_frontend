@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../slices/cartSlice";
 import Modal from "./Modal";
-import { setCompleteMenu } from "../slices/dishSlice";
+import { removeMenuItem, setCompleteMenu } from "../slices/dishSlice";
 
 function MenuCard({ item }) {
     const dispatch = useDispatch();
@@ -53,7 +53,7 @@ function MenuCard({ item }) {
 
     async function handleDelete(id) {
         const res = await axios.delete(`${MAIN_LINK}/dish/id/${id}`)
-        dispatch(removeItem({id:id}))
+        dispatch(removeMenuItem({id:id}))
     }
 
     return (
