@@ -31,7 +31,7 @@ function CartItem({item, quantity}) {
 
     return (
         <div
-            key={item._id}
+            key={item?._id}
             className="flex items-center justify-between border-b border-gray-700 py-4"
         >
             <img
@@ -49,14 +49,14 @@ function CartItem({item, quantity}) {
             </p>
             <div className="flex items-center">
                 <button
-                    onClick={() => updateQuantity(-1, item._id)}
+                    onClick={() => updateQuantity(-1, item?._id)}
                     className="px-2 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition"
                 >
                     -
                 </button>
                 <span className="mx-2 text-white">{quantity || 0}</span>
                 <button
-                    onClick={() => updateQuantity(1, item._id)}
+                    onClick={() => updateQuantity(1, item?._id)}
                     className="px-2 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 transition"
                 >
                     +
@@ -64,7 +64,7 @@ function CartItem({item, quantity}) {
             </div>
             <div>
                 <button
-                    onClick={() => deleteItem(item._id)}
+                    onClick={() => deleteItem(item?._id)}
                     className="px-4 py-2 ml-4 text-sm bg-gray-600 text-white rounded hover:bg-red-600 transition"
                 >
                     Delete

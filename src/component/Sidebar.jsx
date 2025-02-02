@@ -10,7 +10,7 @@ function Sidebar() {
             <SidebarModal>
 
                 <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-2">Manage Counters</h3>
+                    <h3 className="text-lg font-medium mb-2">Admin Panel</h3>
                 </div>
 
                 <AddMerchantButton />
