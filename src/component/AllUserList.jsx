@@ -36,11 +36,10 @@ function AllUserList() {
             await axios.put(`${MAIN_LINK}/users/id/${id}`, {role: newRole}, {
                 headers : {Authorization: `Bearer ${localStorage.getItem('accessToken')}`}
             })
-            if(newRole==='customer'){
-                dispatch(setCustomers({id:id, role:newRole}))
-            } else {
-                dispatch(setMerchants({id:id, role:newRole}))
-            }
+            if(newRole==='customer')
+                dispatch(setCustomers({id:id}))
+            else
+                dispatch(setMerchants({id:id}))
         } catch(err) {
             console.error(err.message);
         }
