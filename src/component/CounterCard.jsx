@@ -27,6 +27,10 @@ function CounterCard({ counter }) {
 
     function handleUpdate() {
         setShopName(shopName);
+        setImage(image);
+        setHours(hours);
+        setDescription(description);
+        setIsActive(isActive);
         setIsModalOpen(true)
     }
 
@@ -71,7 +75,7 @@ function CounterCard({ counter }) {
             <p className={`text-sm font-semibold ${isActive ? 'text-green-400' : 'text-red-400'}`}>
                 {isActive ? 'Active' : 'Inactive'}
             </p>            <div>
-                {counter.merchant_id.map((merchant) => (
+                {counter.merchant_id?.map((merchant) => (
                     <MerchantCard key={merchant._id} merchant={merchant} />
                 ))}
             </div>
