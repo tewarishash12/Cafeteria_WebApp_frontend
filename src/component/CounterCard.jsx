@@ -78,7 +78,7 @@ function CounterCard({ counter }) {
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                     <form>
                         <div className="mb-4">
-                            <label className="block text-gray-700 font-bold mb-2">Dish Name</label>
+                            <label className="block text-gray-700 font-bold mb-2">Counter Name</label>
                             <input
                                 type="text"
                                 name="dish_name"

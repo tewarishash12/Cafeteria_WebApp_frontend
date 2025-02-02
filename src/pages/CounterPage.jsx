@@ -21,7 +21,7 @@ function CounterPage() {
                         onClick={() => setIsModalOpen(true)}
                         className="border border-gray-300 rounded-lg shadow-md bg-white dark:bg-gray-800 flex items-center justify-center hover:shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                        <span className="text-2xl font-bold text-gray-700 dark:text-gray-300">Add Dish</span>
+                        <span className="text-2xl font-bold text-gray-700 dark:text-gray-300">Add Counter</span>
                     </button>
                 </div>
             )}
