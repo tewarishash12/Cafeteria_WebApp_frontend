@@ -9,6 +9,10 @@ function CounterForm({onClose}) {
     const [merchantInfo, setMerchantInfo] = useState([]);
     const [selectedMerchants, setSelectedMerchants] = useState([]);
     const [shopName, setShopName] = useState('');
+    const [image, setImage] = useState('');
+    const [hours, setHours] = useState('');
+    const [description, setDescription] = useState('');
+    const [isActive, setIsActive] = useState(true);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     useEffect(() => {
@@ -33,13 +37,20 @@ function CounterForm({onClose}) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log({merchant_id:selectedMerchants, shop_name:shopName})
         try {
             if (selectedMerchants.length === 0) {
                 alert("Please select at least one merchant before submitting.");
                 return;
             }
-            const res = await axios.post(`${MAIN_LINK}/counter`, {merchant_id:selectedMerchants, shop_name:shopName})
+            const res = await axios.post(`${MAIN_LINK}/counter`, {
+                merchant_id: selectedMerchants, 
+                shop_name: shopName,
+                image: image, 
+                hours: hours, 
+                description: description, 
+                isActive: isActive
+            });
+            
             dispatch(setCounters({counters: res.data.counters}));
             onClose();
         } catch(err) {
@@ -87,6 +98,43 @@ function CounterForm({onClose}) {
                         className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
                         required
                     />
+                    <input
+                        type="text"
+                        name="image"
+                        placeholder="Image"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="hours"
+                        placeholder="Shop Hours"
+                        value={hours}
+                        onChange={(e) => setHours(e.target.value)}
+                        className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="description"
+                        placeholder="Give a breif about your counter"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                        required
+                    />
+                    <input
+                        type="checkBox"
+                        name="shop_name"
+                        placeholder="Shop Name"
+                        checked={isActive}
+                        onChange={(e) => setIsActive(e.target.checked)}
+                        className="py-2 mx-4 rounded-lg bg-gray-800 text-white outline-none"
+                        required
+                    /> 
+                    <label htmlFor="">Are you currently active</label>
                     <button type="submit" className="w-full bg-blue-500 p-2 rounded-lg text-white font-semibold">
                         Submit
                     </button>

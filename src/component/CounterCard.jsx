@@ -8,8 +8,8 @@ import { setCompleteMenu } from '../slices/dishSlice';
 function MerchantCard({ merchant }) {
     return (
         <div key={merchant._id}>
-            <p className='text-sm text-gray-400'>Merchant Name: {merchant.username}</p>
-            <p className='text-sm text-gray-500'>Phone: {merchant.phoneNo}</p>
+            <p className='text-sm text-gray-400'>Merchant Name: {merchant?.username}</p>
+            <p className='text-sm text-gray-500'>Phone: {merchant?.phoneNo}</p>
         </div>
     );
 }
@@ -59,10 +59,10 @@ function CounterCard({ counter }) {
             className="border-l-4 border-blue-500 bg-gray-800 rounded-md shadow-md p-4"
         >
             {image && (
-                <img 
-                    src={image} 
-                    alt={shopName} 
-                    className="w-full h-40 object-cover rounded-lg mb-4" 
+                <img
+                    src={image}
+                    alt={shopName}
+                    className="w-full h-40 object-cover rounded-lg mb-4"
                 />
             )}
             <h2 className="text-2xl font-bold mb-2">{shopName}</h2>
@@ -89,18 +89,57 @@ function CounterCard({ counter }) {
                     Delete
                 </button>
             </div>
-            {isModalOpen &&
+            {isModalOpen && (
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                     <form>
                         <div className="mb-4">
-                            <label className="block text-gray-700 font-bold mb-2">Counter Name</label>
+                            <label className="block text-gray-300 font-bold mb-2">Counter Name</label>
                             <input
                                 type="text"
-                                name="dish_name"
+                                name="shop_name"
+                                placeholder="Shop Name"
                                 value={shopName}
                                 onChange={(e) => setShopName(e.target.value)}
-                                className="w-full px-3 py-2 border rounded-lg text-black"
+                                className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                                required
                             />
+                            <label className="block text-gray-300 font-bold mt-4 mb-2">Image URL</label>
+                            <input
+                                type="text"
+                                name="image"
+                                placeholder="Image URL"
+                                value={image}
+                                onChange={(e) => setImage(e.target.value)}
+                                className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                            />
+                            <label className="block text-gray-300 font-bold mt-4 mb-2">Shop Hours</label>
+                            <input
+                                type="text"
+                                name="hours"
+                                placeholder="Shop Hours"
+                                value={hours}
+                                onChange={(e) => setHours(e.target.value)}
+                                className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                            />
+                            <label className="block text-gray-300 font-bold mt-4 mb-2">Description</label>
+                            <input
+                                type="text"
+                                name="description"
+                                placeholder="Brief description of your counter"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                            />
+                            <div className="flex items-center mt-4">
+                                <input
+                                    type="checkbox"
+                                    name="isActive"
+                                    checked={isActive}
+                                    onChange={(e) => setIsActive(e.target.checked)}
+                                    className="mr-2"
+                                />
+                                <label className="text-gray-300">Are you currently active?</label>
+                            </div>
                         </div>
                         <button
                             type="button"
@@ -111,7 +150,7 @@ function CounterCard({ counter }) {
                         </button>
                     </form>
                 </Modal>
-            }
+            )}
         </div>
     )
 }
