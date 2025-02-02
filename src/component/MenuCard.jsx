@@ -53,7 +53,7 @@ function MenuCard({ item }) {
 
     async function handleDelete(id) {
         const res = await axios.delete(`${MAIN_LINK}/dish/id/${id}`)
-        dispatch(setCompleteMenu({ menu: res.data.dishes }))
+        dispatch(removeItem({id:id}))
     }
 
     return (
