@@ -11,7 +11,7 @@ const counterSlice = createSlice({
         },
         removeCounter: (state, { payload }) => {
             console.log(payload.id);
-            state.fullMenu = state.allCounters.filter(( item ) => item._id !== payload.id);
+            state.allCounters = state.allCounters.filter(( item ) => item._id !== payload.id);
         },
     }
 })
