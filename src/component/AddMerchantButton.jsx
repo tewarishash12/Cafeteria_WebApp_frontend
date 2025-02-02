@@ -35,7 +35,7 @@ function AddMerchantButton() {
                 </button>
             </div>
             {isModalOpen &&
-            <Modal isOpen={isModalOpen}>
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <form
                     onSubmit={handleSubmit}
                     className="space-y-4 text-black">
