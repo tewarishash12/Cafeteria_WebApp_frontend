@@ -49,7 +49,7 @@ function CounterCard({ counter }) {
     async function deleteCounter(id) {
         try {
             const res = await axios.delete(`${MAIN_LINK}/counter/id/${id}`);
-            dispatch(removeCounter({id:id}))
+            dispatch(removeCounter({ id: id }))
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
         } catch (err) {
             console.error(err.message)
@@ -63,18 +63,22 @@ function CounterCard({ counter }) {
             className="border-l-4 border-blue-500 bg-gray-800 rounded-md shadow-md p-4"
         >
             {image && (
-                <img
-                    src={image}
-                    alt={shopName}
-                    className="w-full h-40 object-cover rounded-lg mb-4"
-                />
+                <div className="relative">
+                    <img
+                        src={image}
+                        alt={shopName}
+                        className="w-full h-50 object-cover rounded-lg mb-4"
+                    />
+                    <span 
+                    className={`absolute -bottom-7 right-0 transform -translate-x-1/2 w-4 h-4 rounded-full ${isActive ? 'bg-green-400 animate-ping' : 'bg-red-400'}`}
+                    style={{ animationDuration: '2s' }}
+                    ></span>
+                </div>
             )}
             <h2 className="text-2xl font-bold mb-2">{shopName}</h2>
             <p className="text-sm text-gray-300 mb-2"><strong>Hours:</strong> {hours}</p>
             <p className="text-sm text-gray-300 mb-4"><strong>Description:</strong> {description}</p>
-            <p className={`text-sm font-semibold ${isActive ? 'text-green-400' : 'text-red-400'}`}>
-                {isActive ? 'Active' : 'Inactive'}
-            </p>            <div>
+            <div>
                 {counter.merchant_id?.map((merchant) => (
                     <MerchantCard key={merchant._id} merchant={merchant} />
                 ))}
