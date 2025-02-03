@@ -1,18 +1,19 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCounters } from "../slices/counterSlice";
+import { setCompleteMenu } from "../slices/dishSlice";
 
-function CounterForm({ onClose }) {
+function CounterForm({ onClose, counterData=null }) {
     const dispatch = useDispatch();
     const merchantInfo = useSelector(state => state.user.merchantList)
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
-    const [selectedMerchants, setSelectedMerchants] = useState([]);
-    const [shopName, setShopName] = useState('');
-    const [image, setImage] = useState('');
-    const [hours, setHours] = useState('');
-    const [description, setDescription] = useState('');
-    const [isActive, setIsActive] = useState(true);
+    const [selectedMerchants, setSelectedMerchants] = useState(counterData?.merchant_id || []);
+    const [shopName, setShopName] = useState(counterData?.shop_name || '');
+    const [image, setImage] = useState(counterData?.image || '');
+    const [hours, setHours] = useState(counterData?.hours || '');
+    const [description, setDescription] = useState(counterData?.description || '');
+    const [isActive, setIsActive] = useState(counterData?.isActive ?? true);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleMerchant = (merchantId) => {
@@ -30,15 +31,28 @@ function CounterForm({ onClose }) {
                 alert("Please select at least one merchant before submitting.");
                 return;
             }
-            const res = await axios.post(`${MAIN_LINK}/counter`, {
-                merchant_id: selectedMerchants,
-                shop_name: shopName,
-                image: image,
-                hours: hours,
-                description: description,
-                isActive: isActive
-            });
-            console.log(res.data)
+            let res
+            if (!counterData) {
+                res = await axios.post(`${MAIN_LINK}/counter`, {
+                    merchant_id: selectedMerchants,
+                    shop_name: shopName,
+                    image: image,
+                    hours: hours,
+                    description: description,
+                    isActive: isActive
+                });
+            } else {
+                res = await axios.put(`${MAIN_LINK}/counter/id/${counterData._id}`, {
+                    merchant_id: selectedMerchants,
+                    shop_name: shopName,
+                    image: image,
+                    hours: hours,
+                    description: description,
+                    isActive: isActive
+                });
+                dispatch(setCompleteMenu({ menu: res?.data?.dishes }));
+            }
+            console.log(res)
             dispatch(setCounters({ counters: res?.data?.counters }));
             onClose();
         } catch (err) {
@@ -49,8 +63,12 @@ function CounterForm({ onClose }) {
     return (
         <div className="flex justify-center items-center h-screen bg-white">
             <div className="bg-white p-6 rounded-xl w-80 shadow-lg relative">
-                <h2 className="text-gray-900 text-2xl font-bold text-center">Welcome</h2>
-                <p className="text-gray-900 text-center mb-4">Let's create your counter!</p>
+                <h2 className="text-gray-900 text-2xl font-bold text-center">
+                    {counterData ? "Edit Counter" : "Create Counter"}
+                </h2>
+                <p className="text-gray-900 text-center mb-4">
+                    {counterData ? "Modify your counter details" : "Let's create your counter!"}
+                </p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="relative">
                         <label className="text-gray-900 font-medium" htmlFor="">Associated Merchants</label>
@@ -125,11 +143,10 @@ function CounterForm({ onClose }) {
                         checked={isActive}
                         onChange={(e) => setIsActive(e.target.checked)}
                         className="p-2 mx-1 rounded-lg border border-black text-gray-800 outline-none"
-                        required
                     />
                     <label className="text-gray-900 font-medium" htmlFor="">Are you currently active</label>
                     <button type="submit" className="w-full bg-blue-500 p-2 rounded-lg text-white font-semibold">
-                        Submit
+                        {counterData ? "Save Changes" : "Submit"}
                     </button>
                 </form>
             </div>

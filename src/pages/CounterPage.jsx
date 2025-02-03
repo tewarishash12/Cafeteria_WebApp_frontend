@@ -5,17 +5,17 @@ import CounterForm from '../component/CounterForm';
 import Modal from '../component/Modal';
 
 function CounterPage() {
-    const counters = useSelector(state => state.counter.allCounters)
+    const counters = useSelector(state => state?.counter?.allCounters)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <div className="p-4">
             <h1 className="text-xl font-bold mb-4">Counters</h1>
 
-            {counters.length > 0 && (
+            {counters?.length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {counters.map((counter) => (
-                        <CounterCard key={counter._id} counter={counter} />
+                    {counters?.map((counter) => (
+                        <CounterCard key={counter?._id} counter={counter} />
                     ))}
                     <button
                         onClick={() => setIsModalOpen(true)}
@@ -32,7 +32,7 @@ function CounterPage() {
             }
 
 
-            {counters.length === 0 && (
+            {counters?.length === 0 && (
                 <p>No counters available.</p>
             )}
         </div>
