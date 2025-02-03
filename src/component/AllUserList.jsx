@@ -14,23 +14,6 @@ function AllUserList() {
     const customerList = useSelector((state) => state?.user?.customerList);
     const merchantList = useSelector((state) => state?.user?.merchantList);
 
-    useEffect(() => {
-        async function allUsers() {
-            try {
-                const res = await axios.get(`${MAIN_LINK}/users`, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-                });
-                const users = res?.data?.users;
-                const customers = users.filter((user) => user.role === "customer");
-                const merchants = users.filter((user) => user.role === "merchant");
-                dispatch(allUsersList({ customers: customers, merchants: merchants }));
-            } catch (err) {
-                console.error(err.message);
-            }
-        }
-        allUsers();
-    }, [dispatch]);
-
     async function handleRoleChange(id,newRole){
         try {
             await axios.put(`${MAIN_LINK}/users/id/${id}`, {role: newRole}, {

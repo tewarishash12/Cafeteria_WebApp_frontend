@@ -14,6 +14,7 @@ import { setCart } from './slices/cartSlice'
 import { setCompleteMenu } from './slices/dishSlice'
 import { setCounters } from './slices/counterSlice'
 import ProfilePage from './pages/ProfilePage'
+import { allUsersList } from './slices/userSlice'
 
 function layout(element) {
   return (
@@ -79,6 +80,23 @@ function App() {
     }
     fetchAllCounters();
   },[]);
+
+  useEffect(() => {
+    async function allUsers() {
+        try {
+            const res = await axios.get(`${MAIN_LINK}/users`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+            });
+            const users = res?.data?.users;
+            const customers = users.filter((user) => user.role === "customer");
+            const merchants = users.filter((user) => user.role === "merchant");
+            dispatch(allUsersList({ customers: customers, merchants: merchants }));
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+    allUsers();
+}, []);
 
   return (
     <>
