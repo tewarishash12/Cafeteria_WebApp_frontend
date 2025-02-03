@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCounters } from "../slices/counterSlice";
 
-function CounterForm({onClose}) {
+function CounterForm({ onClose }) {
     const dispatch = useDispatch();
+    const merchantInfo = useSelector(state => state.user.merchantList)
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
-    const [merchantInfo, setMerchantInfo] = useState([]);
     const [selectedMerchants, setSelectedMerchants] = useState([]);
     const [shopName, setShopName] = useState('');
     const [image, setImage] = useState('');
@@ -14,18 +14,6 @@ function CounterForm({onClose}) {
     const [description, setDescription] = useState('');
     const [isActive, setIsActive] = useState(true);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
-    useEffect(() => {
-        async function allMerchants() {
-            try {
-                const res = await axios.get(`${MAIN_LINK}/users/merchants`);
-                setMerchantInfo(res.data.merchants);
-            } catch (err) {
-                console.error(err.message);
-            }
-        }
-        allMerchants();
-    }, []);
 
     const toggleMerchant = (merchantId) => {
         setSelectedMerchants((prev) =>
@@ -43,30 +31,31 @@ function CounterForm({onClose}) {
                 return;
             }
             const res = await axios.post(`${MAIN_LINK}/counter`, {
-                merchant_id: selectedMerchants, 
+                merchant_id: selectedMerchants,
                 shop_name: shopName,
-                image: image, 
-                hours: hours, 
-                description: description, 
+                image: image,
+                hours: hours,
+                description: description,
                 isActive: isActive
             });
             console.log(res.data)
-            dispatch(setCounters({counters: res?.data?.counters}));
+            dispatch(setCounters({ counters: res?.data?.counters }));
             onClose();
-        } catch(err) {
+        } catch (err) {
             console.error(err.message)
         }
     };
 
     return (
-        <div className="flex justify-center items-center h-screen bg-black">
-            <div className="bg-gray-900 p-6 rounded-xl w-80 shadow-lg relative">
-                <h2 className="text-white text-2xl font-bold text-center">Welcome</h2>
-                <p className="text-gray-400 text-center mb-4">Let's create your counter!</p>
+        <div className="flex justify-center items-center h-screen bg-white">
+            <div className="bg-white p-6 rounded-xl w-80 shadow-lg relative">
+                <h2 className="text-gray-900 text-2xl font-bold text-center">Welcome</h2>
+                <p className="text-gray-900 text-center mb-4">Let's create your counter!</p>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="relative">
+                        <label className="text-gray-900 font-medium" htmlFor="">Associated Merchants</label>
                         <div
-                            className="w-full p-2 rounded-lg bg-gray-800 text-white cursor-pointer"
+                            className="w-full p-2 rounded-lg border border-black text-gray-800 cursor-pointer"
                             onClick={() => setDropdownOpen(!dropdownOpen)}
                         >
                             {selectedMerchants.length > 0
@@ -74,9 +63,9 @@ function CounterForm({onClose}) {
                                 : "Select Merchants"}
                         </div>
                         {dropdownOpen && (
-                            <div className="absolute left-0 w-full bg-gray-800 mt-2 rounded-lg shadow-lg max-h-40 overflow-y-auto z-10">
+                            <div className="absolute left-0 w-full border border-black bg-white text-gray-800 mt-2 rounded-lg shadow-lg max-h-40 overflow-y-auto z-10">
                                 {merchantInfo.map((m) => (
-                                    <label key={m._id} className="block p-2 hover:bg-gray-700 cursor-pointer text-white">
+                                    <label key={m._id} className="block p-2 hover:bg-gray-200 cursor-pointer text-gray-800">
                                         <input
                                             type="checkbox"
                                             checked={selectedMerchants.includes(m._id)}
@@ -89,40 +78,44 @@ function CounterForm({onClose}) {
                             </div>
                         )}
                     </div>
+                    <label className="text-gray-900 font-medium" htmlFor="">Counter Name</label>
                     <input
                         type="text"
                         name="shop_name"
                         placeholder="Shop Name"
                         value={shopName}
                         onChange={(e) => setShopName(e.target.value)}
-                        className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                        className="w-full p-2 rounded-lg border border-black text-gray-800 outline-none"
                         required
                     />
+                    <label className="text-gray-900 font-medium" htmlFor="">Counter Image:</label>
                     <input
                         type="text"
                         name="image"
                         placeholder="Image"
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
-                        className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                        className="w-full p-2 rounded-lg border border-black text-gray-800 outline-none"
                         required
                     />
+                    <label className="text-gray-900 font-medium" htmlFor="">Active Hours</label>
                     <input
                         type="text"
                         name="hours"
                         placeholder="Shop Hours"
                         value={hours}
                         onChange={(e) => setHours(e.target.value)}
-                        className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                        className="w-full p-2 rounded-lg border border-black text-gray-800 outline-none"
                         required
                     />
+                    <label className="text-gray-900 font-medium" htmlFor="">Describe about your Counter</label>
                     <input
                         type="text"
                         name="description"
-                        placeholder="Give a breif about your counter"
+                        placeholder="Give a brief about your counter"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-2 rounded-lg bg-gray-800 text-white outline-none"
+                        className="w-full p-2 rounded-lg border border-black text-gray-800 outline-none"
                         required
                     />
                     <input
@@ -131,10 +124,10 @@ function CounterForm({onClose}) {
                         placeholder="Shop Name"
                         checked={isActive}
                         onChange={(e) => setIsActive(e.target.checked)}
-                        className="py-2 mx-4 rounded-lg bg-gray-800 text-white outline-none"
+                        className="p-2 mx-1 rounded-lg border border-black text-gray-800 outline-none"
                         required
-                    /> 
-                    <label htmlFor="">Are you currently active</label>
+                    />
+                    <label className="text-gray-900 font-medium" htmlFor="">Are you currently active</label>
                     <button type="submit" className="w-full bg-blue-500 p-2 rounded-lg text-white font-semibold">
                         Submit
                     </button>
