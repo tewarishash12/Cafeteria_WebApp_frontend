@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { changeQuantity, removeItem } from '../slices/cartSlice';
+import { changeQuantity, removeItem } from '../../slices/cartSlice';
 import axios from 'axios';
 
 function CartItem({item, quantity}) {
