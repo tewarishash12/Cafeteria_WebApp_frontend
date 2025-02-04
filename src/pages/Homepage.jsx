@@ -1,6 +1,6 @@
 import React from 'react'
-import AutoCarousel from '../component/AutoCarousel'
-import Categories from '../component/Categories'
+import AutoCarousel from '../component/Home/AutoCarousel'
+import Categories from '../component/Home/Categories'
 
 function Homepage() {
     return (

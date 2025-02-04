@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import CounterCard from '../component/CounterCard';
+import CounterCard from '../component/Counter/CounterCard';
 import { useSelector } from 'react-redux';
-import CounterForm from '../component/CounterForm';
-import Modal from '../component/Modal';
+import CounterForm from '../component/Counter/CounterForm';
+import Modal from '../component/Modal/Modal';
 
 function CounterPage() {
     const counters = useSelector(state => state?.counter?.allCounters)

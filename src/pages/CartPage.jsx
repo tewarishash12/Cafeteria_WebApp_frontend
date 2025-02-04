@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import Subtotal from '../component/SubTotal';
-import CartItems from '../component/CartItems';
+import Subtotal from '../component/Cart/SubTotal';
+import CartItems from '../component/Cart/CartItems';
 
 function CartPage() {
   const items = useSelector(state=> state.cart.items);

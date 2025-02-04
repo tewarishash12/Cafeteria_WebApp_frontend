@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import MenuCard from "../component/MenuCard";
-import FoodForm from "../component/FoodForm";
-import Modal from "../component/Modal";
+import MenuCard from "../component/Menu/MenuCard";
+import FoodForm from "../component/Menu/FoodForm";
+import Modal from "../component/Modal/Modal";
 
 function MenuPage() {
     const menuItems = useSelector(state => state.dish.fullMenu);
