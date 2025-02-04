@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import Modal from './Modal';
+import Modal from '../Modal/Modal';
 
 function AddMerchantButton() {
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { allUsersList, setCustomers, setMerchants } from "../slices/userSlice";
-import Modal from "./Modal";
+import { allUsersList, setCustomers, setMerchants } from "../../slices/userSlice";
+import Modal from "../Modal/Modal";
 
 const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
 
