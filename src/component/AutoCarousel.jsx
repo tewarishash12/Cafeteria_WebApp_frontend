@@ -8,7 +8,7 @@ export default function Carousel() {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 1, // Use 1 slide to work with fade effect
+        slidesToShow: 1, 
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
@@ -22,7 +22,7 @@ export default function Carousel() {
     ];
 
     return (
-        <div className="relative w-[80vw] h-[80vh] overflow-hidden mt-2 rounded-lg">
+        <div className="relative w-[90vw] h-[60vh] overflow-hidden mt-2 rounded-lg">
             <Slider {...settings}>
                 {slides.map((slide, index) => (
                     <div key={index} className="relative w-full">
@@ -31,7 +31,6 @@ export default function Carousel() {
                             alt={`Image ${index + 1}`}
                             className="w-full object-contain"
                         />
-                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-50"></div>
                     </div>
                 ))}
             </Slider>
