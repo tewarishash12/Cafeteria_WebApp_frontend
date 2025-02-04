@@ -10,14 +10,14 @@ function Categories() {
     ]
     return (
         <div className="flex flex-col justify-center gap-6 p-6">
-            <h1 className='text-3xl text-white'>Categories</h1>
+            <h1 className='text-3xl'>Categories</h1>
             <div className='flex'>
                 {foodCategories.map((category, index) => (
                     <div key={index}
-                        className="flex items-center flex-col space-x-4 text-white justify-center text-3xl transition-all"
+                        className="flex items-center flex-col space-x-4 justify-center text-3xl transition-all"
                     >
                         <img src={category.icon} alt={category.name} className='h-[10vh] w-[10vh] rounded-full cursor-pointer' />
-                        <span className="mt-2 text-sm">{category.name}</span>
+                        <span className="mt-2 text-lg">{category.name}</span>
                     </div>
                 ))}
             </div>
