@@ -1,7 +1,7 @@
 import React from 'react'
-import SidebarModal from './SidebarModal'
-import AddMerchantButton from './AddMerchantButton'
-import AllUserList from './AllUserList'
+import SidebarModal from './Modal/SidebarModal'
+import AddMerchantButton from './Profile/AddMerchantButton'
+import AllUserList from './Profile/AllUserList'
 
 function Sidebar() {
 
