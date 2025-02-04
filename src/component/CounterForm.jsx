@@ -28,7 +28,7 @@ function CounterForm({ onClose, counterData = null }) {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            if (selectedMerchants.length === 0) {
+            if (!counterData && selectedMerchants.length === 0) {
                 alert("Please select at least one merchant before submitting.");
                 return;
             }
@@ -54,9 +54,10 @@ function CounterForm({ onClose, counterData = null }) {
                 dispatch(setCompleteMenu({ menu: res?.data?.dishes }));
             }
             dispatch(setCounters({ counters: res?.data?.counters }));
-            onClose();
         } catch (err) {
             console.error(err.message);
+        } finally {
+            onClose();
         }
     }
 
