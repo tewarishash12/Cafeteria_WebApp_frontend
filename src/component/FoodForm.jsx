@@ -3,32 +3,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCompleteMenu } from '../slices/dishSlice';
 import axios from 'axios';
 
-function FoodForm({onClose}) {
+function FoodForm({ onClose, itemData = null }) {
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
     const counters = useSelector(state => state.counter.allCounters);
     const dispatch = useDispatch();
-
-    const [dishName, setDishName] = useState('')
-    const [description, setDescription] = useState('')
-    const [image, setImage] = useState('')
-    const [price, setPrice] = useState('')
-    const [availability, setAvailability] = useState(true)
-    const [counterId, setCounterId] = useState('')
+    const [dishName, setDishName] = useState(itemData?.dish_name || '')
+    const [description, setDescription] = useState(itemData?.description || '')
+    const [image, setImage] = useState(itemData?.image || '')
+    const [price, setPrice] = useState(itemData?.price || '')
+    const [availability, setAvailability] = useState(itemData?.availability && true)
+    const [counterId, setCounterId] = useState(itemData?.counter_id._id || '')
 
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            const res = await axios.post(`${MAIN_LINK}/dish`, { dish_name: dishName, description: description, image: image, availability: availability, counter_id: counterId, price: price });
+            let res;
+            if (!itemData) {
+                res = await axios.post(`${MAIN_LINK}/dish`, { dish_name: dishName, description: description, image: image, availability: availability, counter_id: counterId, price: price });
+            } else {
+                res = await axios.put(`${MAIN_LINK}/dish/id/${itemData._id}`, { dish_name: dishName, description: description, price: price, availability: availability, image: image })
+                console.log(res?.data?.dishes)
+            }
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
-            setDishName('');
-            setDescription('');
-            setImage('');
-            setPrice('');
-            setAvailability(true);
-            setCounterId('');
-            onClose();
         } catch (err) {
             console.error(err.message);
+        } finally {
+            onClose();
         }
     }
 
@@ -37,14 +37,16 @@ function FoodForm({onClose}) {
             onSubmit={handleSubmit}
             className="space-y-4 text-black">
             <div>
-                <label className="block text-sm font-medium">Dish Name</label>
+                <label className="block text-sm font-medium">
+                    {itemData ? "Edit Dish Data" : "Enter new Dish data"}
+                </label>
                 <input
                     type="text"
                     name="dish_name"
                     value={dishName}
                     onChange={(e) => setDishName(e.target.value)}
                     required
-                    className="w-full p-2 border rounded"
+                    className="w-full p-2 border border-blue-900 rounded"
                 />
             </div>
             <div>
@@ -53,7 +55,7 @@ function FoodForm({onClose}) {
                     name="description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full p-2 border rounded"
+                    className="w-full p-2 border border-blue-900 rounded"
                 ></textarea>
             </div>
             <div>
@@ -63,7 +65,7 @@ function FoodForm({onClose}) {
                     name="image"
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
-                    className="w-full p-2 border rounded"
+                    className="w-full p-2 border border-blue-900 rounded"
                 />
             </div>
             <div>
@@ -74,7 +76,7 @@ function FoodForm({onClose}) {
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                     required
-                    className="w-full p-2 border rounded"
+                    className="w-full p-2 border border-blue-900 rounded"
                 />
             </div>
             <div>
@@ -90,28 +92,32 @@ function FoodForm({onClose}) {
             </div>
             <div>
                 <label className="block text-sm font-medium">Counter</label>
-                <select
-                    name="counter_id"
-                    value={counterId}
-                    onChange={(e) => setCounterId(e.target.value)}
-                    required
-                    className="w-full p-2 border rounded"
-                >
-                    <option value="" disabled>
-                        Select Counter
-                    </option>
-                    {counters.map((counter) => (
-                        <option key={counter._id} value={counter._id}>
-                            {counter.shop_name}
+                {!itemData ? (
+                    <select
+                        name="counter_id"
+                        value={counterId}
+                        onChange={(e) => setCounterId(e.target.value)}
+                        required
+                        className="w-full p-2 border border-blue-900 rounded"
+                    >
+                        <option value="" selected hidden>
+                            Select Counter
                         </option>
-                    ))}
-                </select>
+                        {counters.map((counter) => (
+                            <option key={counter._id} value={counter._id}>
+                                {counter.shop_name}
+                            </option>
+                        ))}
+                    </select>
+                ) : (
+                    <p className="p-2 border rounded bg-gray-100">{itemData.counter_id?.shop_name}</p>
+                )}
             </div>
             <button
                 type="submit"
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
-                Add Dish
+                {itemData ? "Save changes" : "Add Dish"}
             </button>
         </form>
     )
