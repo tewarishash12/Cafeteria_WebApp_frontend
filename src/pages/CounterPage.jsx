@@ -10,7 +10,7 @@ function CounterPage() {
 
     return (
         <div className="p-4">
-            <h1 className="text-xl font-bold mb-4">Counters</h1>
+            <h1 className="text-3xl text-center font-bold mb-4">Counters</h1>
 
             {counters?.length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
