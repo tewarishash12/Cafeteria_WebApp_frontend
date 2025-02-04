@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileInformation from '../component/ProfileInformation';
+import ProfileInformation from '../component/Profile/ProfileInformation';
 import Sidebar from '../component/Sidebar';
 
 function ProfilePage() {
