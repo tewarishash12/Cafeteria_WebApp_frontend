@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import Modal from './Modal';
+import Modal from '../Modal';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { removeCounter } from '../slices/counterSlice';
-import { setCompleteMenu } from '../slices/dishSlice';
+import { removeCounter } from '../../slices/counterSlice';
+import { setCompleteMenu } from '../../slices/dishSlice';
 import CounterForm from './CounterForm';
 
 function CounterCard({ counter }) {

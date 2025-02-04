@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCounters } from "../slices/counterSlice";
-import { setCompleteMenu } from "../slices/dishSlice";
+import { setCounters } from "../../slices/counterSlice";
+import { setCompleteMenu } from "../../slices/dishSlice";
 
 function CounterForm({ onClose, counterData = null }) {
     const dispatch = useDispatch();
