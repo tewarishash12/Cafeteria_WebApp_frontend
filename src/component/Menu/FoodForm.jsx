@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setCompleteMenu } from '../slices/dishSlice';
+import { setCompleteMenu } from '../../slices/dishSlice';
 import axios from 'axios';
 
 function FoodForm({ onClose, itemData = null }) {

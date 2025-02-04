@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addItem } from "../slices/cartSlice";
-import Modal from "./Modal";
-import { removeMenuItem } from "../slices/dishSlice";
+import { addItem } from "../../slices/cartSlice";
+import Modal from "../Modal";
+import { removeMenuItem } from "../../slices/dishSlice";
 import FoodForm from "./FoodForm";
 
 function MenuCard({ item }) {
