@@ -14,15 +14,15 @@ function CounterPage() {
 
             {counters?.length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="border-l-4  border-blue-600 rounded-lg shadow-md bg-slate-200 flex items-center justify-center hover:shadow-xl hover:bg-slate-300"
+                    >
+                        <span className="text-2xl font-bold">Add Counter</span>
+                    </button>
                     {counters?.map((counter) => (
                         <CounterCard key={counter?._id} counter={counter} />
                     ))}
-                    <button
-                        onClick={() => setIsModalOpen(true)}
-                        className="border border-gray-300 rounded-lg shadow-md bg-white dark:bg-gray-800 flex items-center justify-center hover:shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                        <span className="text-2xl font-bold text-gray-700 dark:text-gray-300">Add Counter</span>
-                    </button>
                 </div>
             )}
             {isModalOpen &&

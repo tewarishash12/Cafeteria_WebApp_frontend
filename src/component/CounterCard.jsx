@@ -6,15 +6,6 @@ import { removeCounter } from '../slices/counterSlice';
 import { setCompleteMenu } from '../slices/dishSlice';
 import CounterForm from './CounterForm';
 
-function MerchantCard({ merchant }) {
-    return (
-        <div key={merchant?._id}>
-            <p className='text-sm text-gray-400'>Merchant Name: {merchant?.username}</p>
-            <p className='text-sm text-gray-500'>Phone: {merchant?.phoneNo}</p>
-        </div>
-    );
-}
-
 function CounterCard({ counter }) {
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
     const dispatch = useDispatch();
@@ -42,7 +33,7 @@ function CounterCard({ counter }) {
     return (
         <div
             key={counter._id}
-            className="border-l-4 border-blue-500 bg-gray-800 rounded-md shadow-md p-4"
+            className="border-l-4 border-blue-500 bg-slate-200 rounded-md shadow-xl p-4"
         >
             {image && (
                 <div className="relative">
@@ -58,13 +49,8 @@ function CounterCard({ counter }) {
                 </div>
             )}
             <h2 className="text-2xl font-bold mb-2">{shop_name}</h2>
-            <p className="text-sm text-gray-300 mb-2"><strong>Hours:</strong> {hours}</p>
-            <p className="text-sm text-gray-300 mb-4"><strong>Description:</strong> {description}</p>
-            <div>
-                {counter.merchant_id?.map((merchant) => (
-                    <MerchantCard key={merchant?._id} merchant={merchant} />
-                ))}
-            </div>
+            <p className="text-sm mb-2"><strong>Hours:</strong> {hours}</p>
+            <p className="text-sm mb-4"><strong>Description:</strong> {description}</p>
             <div className="flex py-1 px-3 rounded-md text-medium gap-2 mt-2">
                 <button
                     onClick={() => handleUpdate()}
