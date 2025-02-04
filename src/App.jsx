@@ -100,7 +100,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-amber-50 min-h-screen text-gray-700">
+      <div className="bg-blue-50 min-h-screen text-gray-700">
         <BrowserRouter >
           <Routes>
             <Route path="/" element={layout(<Homepage />)} />

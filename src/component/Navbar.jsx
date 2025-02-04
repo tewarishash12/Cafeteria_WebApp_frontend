@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingBag } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -11,45 +11,45 @@ const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const length = useSelector(state => state?.cart?.items?.length || 0)
+    const length = useSelector(state => state?.cart?.items?.length || 0);
     const user = useSelector(state => state.auth.currentUser);
-    
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    async function handleLogout(){
+    async function handleLogout() {
         try {
-            axios.post(`${AUTH_LINK}/auth/logout`, {token: localStorage.getItem('refreshToken')});
+            axios.post(`${AUTH_LINK}/auth/logout`, { token: localStorage.getItem('refreshToken') });
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('accessToken');
             dispatch(removeCurrentUser());
             dispatch(emptyCart());
             navigate('/auth/login');
-        } catch(err) {
-            console.error(err.message)
+        } catch (err) {
+            console.error(err.message);
         }
     }
 
     return (
-        <nav className="overflow-hidden bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 w-full z-50">
+        <nav className="overflow-hidden bg-blue-100 border-b border-blue-400 sticky top-0 w-full z-50">
             <div className="max-w-screen-xl">
                 <div className="flex min-w-screen justify-between items-center h-16">
                     <div className="flex items-center ml-4">
-                        <NavLink to="/" className="flex items-center space-x-2 ">
+                        <NavLink to="/" className="flex items-center space-x-2">
                             <img
                                 src="https://flowbite.com/docs/images/logo.svg"
                                 alt="Logo"
                                 className="h-8"
                             />
-                            <span className="text-2xl font-semibold text-gray-900 dark:text-white">FoodiDelicious</span>
+                            <span className="text-2xl font-semibold">FoodiDelicious</span>
                         </NavLink>
                     </div>
 
                     <div className="flex items-center md:hidden">
                         <button
                             onClick={toggleMenu}
-                            className="inline-flex items-center justify-center p-1 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:outline-none"
+                            className="inline-flex items-center justify-center p-1 rounded-md hover:text-gray-900"
                         >
                             <span className="sr-only">Open main menu</span>
                             <svg
@@ -71,61 +71,147 @@ const Navbar = () => {
                     </div>
 
                     <div className="hidden md:flex md:items-center md:space-x-6 pr-10">
-                        <NavLink to="/" className="text-gray-900 dark:text-white hover:text-blue-600">Home</NavLink>
-                        <NavLink to="/counter" className="text-gray-900 dark:text-white hover:text-blue-600">Counters</NavLink>
-                        <NavLink to="/menu" className="text-gray-900 dark:text-white hover:text-blue-600">MenuPage</NavLink>
-                        {localStorage.getItem("refreshToken") ?
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) =>
+                                `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                            }
+                        >
+                            Home
+                        </NavLink>
+                        <NavLink
+                            to="/counter"
+                            className={({ isActive }) =>
+                                `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                            }
+                        >
+                            Counters
+                        </NavLink>
+                        <NavLink
+                            to="/menu"
+                            className={({ isActive }) =>
+                                `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                            }
+                        >
+                            MenuPage
+                        </NavLink>
+                        {localStorage.getItem("refreshToken") ? (
                             <>
-                                <NavLink to="/users/me" className="flex relative">
+                                <NavLink
+                                    to="/users/me"
+                                    className={({ isActive }) =>
+                                        `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                                    }
+                                >
                                     {user?.username} Profile
                                 </NavLink>
                                 <button
-                                onClick={handleLogout}
-                                className="text-gray-900 dark:text-white hover:text-blue-600">
+                                    onClick={handleLogout}
+                                    className="hover:text-blue-700"
+                                >
                                     Logout
                                 </button>
                                 <NavLink to="/cart" className="flex relative">
                                     <FaShoppingBag />
-                                    <span className='text-sm text-orange-50 bg-amber-700 rounded-full w-5 h-5 px-1.5 font-bold absolute -top-4 left-2'>{length}</span>
+                                    <span className="text-sm text-orange-50 bg-amber-700 rounded-full w-5 h-5 px-1.5 font-bold absolute -top-4 left-2">
+                                        {length}
+                                    </span>
                                 </NavLink>
                             </>
-                            :
+                        ) : (
                             <>
-                                <NavLink to="/auth/register" className="text-gray-900 dark:text-white hover:text-blue-600">Signup</NavLink>
-                                <NavLink to="/auth/login" className="text-gray-900 dark:text-white hover:text-blue-600">Login</NavLink>
+                                <NavLink
+                                    to="/auth/register"
+                                    className={({ isActive }) =>
+                                        `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                                    }
+                                >
+                                    Signup
+                                </NavLink>
+                                <NavLink
+                                    to="/auth/login"
+                                    className={({ isActive }) =>
+                                        `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                                    }
+                                >
+                                    Login
+                                </NavLink>
                             </>
-                        }
+                        )}
                     </div>
                 </div>
             </div>
 
             {isMenuOpen && (
                 <div className="md:hidden">
-                    <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3 bg-gray-50 dark:bg-gray-800 flex flex-col">
-                        <NavLink to="/" className="text-gray-900 dark:text-white hover:text-blue-600">Home</NavLink>
-                        <NavLink to="/counter" className="text-gray-900 dark:text-white hover:text-blue-600">Counters</NavLink>
-                        <NavLink to="/menu" className="text-gray-900 dark:text-white hover:text-blue-600">MenuPage</NavLink>
-                        {localStorage.getItem("refreshToken") ?
+                    <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3 bg-blue-100 flex flex-col">
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) =>
+                                `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                            }
+                        >
+                            Home
+                        </NavLink>
+                        <NavLink
+                            to="/counter"
+                            className={({ isActive }) =>
+                                `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                            }
+                        >
+                            Counters
+                        </NavLink>
+                        <NavLink
+                            to="/menu"
+                            className={({ isActive }) =>
+                                `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                            }
+                        >
+                            MenuPage
+                        </NavLink>
+                        {localStorage.getItem("refreshToken") ? (
                             <>
-                                <NavLink to="/users/me" className="flex relative">
+                                <NavLink
+                                    to="/users/me"
+                                    className={({ isActive }) =>
+                                        `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                                    }
+                                >
                                     {user?.username} Profile
                                 </NavLink>
                                 <button
-                                onClick={handleLogout}
-                                className="text-gray-900 dark:text-white hover:text-blue-600">
+                                    onClick={handleLogout}
+                                    className="hover:text-blue-700"
+                                >
                                     Logout
                                 </button>
                                 <NavLink to="/cart" className="flex relative">
                                     Cart
-                                    <span className='text-sm text-orange-50 bg-amber-700 rounded-full w-5 h-5 px-1.5 font-bold absolute -top-4 left-2'>{length}</span>
+                                    <span className="text-sm text-orange-50 bg-amber-700 rounded-full w-5 h-5 px-1.5 font-bold absolute -top-4 left-2">
+                                        {length}
+                                    </span>
                                 </NavLink>
                             </>
-                            :
+                        ) : (
                             <>
-                                <NavLink to="/auth/register" className="text-gray-900 dark:text-white hover:text-blue-600">Signup</NavLink>
-                                <NavLink to="/auth/login" className="text-gray-900 dark:text-white hover:text-blue-600">Login</NavLink>
+                                <NavLink
+                                    to="/auth/register"
+                                    className={({ isActive }) =>
+                                        `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                                    }
+                                >
+                                    Signup
+                                </NavLink>
+                                <NavLink
+                                    to="/auth/login"
+                                    className={({ isActive }) =>
+                                        `hover:text-blue-700 ${isActive ? 'font-bold border-b-2 border-blue-700' : ''}`
+                                    }
+                                >
+                                    Login
+                                </NavLink>
                             </>
-                        }
+                        )}
                     </div>
                 </div>
             )}
