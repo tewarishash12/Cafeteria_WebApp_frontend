@@ -36,14 +36,14 @@ function MenuCard({ item }) {
     }
 
     async function handleDelete(id) {
-        const res = await axios.delete(`${MAIN_LINK}/dish/id/${id}`)
+        await axios.delete(`${MAIN_LINK}/dish/id/${id}`)
         dispatch(removeMenuItem({ id: id }))
     }
 
     return (
         <div className="bg-slate-200 rounded-lg shadow-md hover:shadow-xl border border-blue-900">
             <img
-                src={image || "https://via.placeholder.com/150"}
+                src={image}
                 alt={dish_name}
                 className="w-full h-48 object-fill border-gray-600 rounded-tl-lg rounded-tr-lg"
             />
@@ -55,7 +55,7 @@ function MenuCard({ item }) {
                     {availability ? "Available" : "Out of Stock"}
                 </p>
                 <p className="text-gray-400 text-sm mt-2">
-                    Shop: <span className="font-bold">{counter_id?.shop_name || ""}</span>
+                    Shop: <span className="font-bold">{counter_id?.shop_name}</span>
                 </p>
                 <div className="flex flex-wrap gap-3 mt-4">
                     <button
@@ -80,7 +80,6 @@ function MenuCard({ item }) {
                 </div>
             </div>
 
-            {/* Modal */}
             {isModalOpen &&
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                     <FoodForm onClose={() => setIsModalOpen(false)} itemData={selectedItem} />
