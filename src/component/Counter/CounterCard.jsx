@@ -40,7 +40,7 @@ function CounterCard({ counter }) {
                     <img
                         src={image}
                         alt={shop_name}
-                        className="w-full h-50 object-cover rounded-lg mb-4"
+                        className="w-full h-50 object-fill  rounded-lg mb-4"
                     />
                     <span 
                     className={`absolute -bottom-7 right-0 transform -translate-x-1/2 w-4 h-4 rounded-full ${isActive ? 'bg-green-400 animate-ping' : 'bg-red-400'}`}

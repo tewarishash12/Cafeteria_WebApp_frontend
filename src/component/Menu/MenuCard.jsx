@@ -45,7 +45,7 @@ function MenuCard({ item }) {
             <img
                 src={image || "https://via.placeholder.com/150"}
                 alt={dish_name}
-                className="w-full h-48 object-fill border-gray-600 rounded-lg"
+                className="w-full h-48 object-fill border-gray-600 rounded-tl-lg rounded-tr-lg"
             />
             <div className="p-4">
                 <h2 className="text-lg mb-2 text-slate-900 font-bold">{dish_name}</h2>
