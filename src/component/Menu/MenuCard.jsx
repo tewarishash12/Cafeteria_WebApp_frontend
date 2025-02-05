@@ -10,10 +10,13 @@ function MenuCard({ item }) {
     const dispatch = useDispatch();
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
     const userRole = useSelector(state => state?.auth?.currentUser?.role);
+    const cartItems = useSelector(state => state?.cart?.items);
     const { _id, image, dish_name, description, price, availability, counter_id } = item;
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedItem, setSelectedItem] = useState(null);
+
+    const isItemInCart = cartItems.some(({item}) =>item._id === _id);
 
     async function handleAddToCart(e, food) {
         e.preventDefault();
@@ -42,7 +45,7 @@ function MenuCard({ item }) {
                 headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
             })
             dispatch(removeMenuItem({ id: id }))
-        } catch(err) {
+        } catch (err) {
             console.error(err.message);
         }
     }
@@ -65,15 +68,20 @@ function MenuCard({ item }) {
                     Shop: <span className="font-bold">{counter_id?.shop_name}</span>
                 </p>
                 <div className="flex flex-wrap gap-3 mt-4">
-                    {userRole==="customer" ? 
-                    <button
-                    className={`${availability ? "bg-teal-600 hover:bg-teal-700 text-white cursor-pointer" : "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"} text-white  px-4 py-2 rounded-lg transition`}
-                    onClick={(e) => handleAddToCart(e, item)}
-                    disabled={!availability}
-                    >
-                        {availability ? "Add to Cart" : "Out of Stock"}
-                    </button>
-                    : ""}
+                    {userRole === "customer" ?
+                        <button
+                            className={`${isItemInCart
+                                ? "bg-cyan-800 text-white cursor-not-allowed"
+                                : availability
+                                    ? "bg-teal-600 hover:bg-teal-700 text-white cursor-pointer"
+                                    : "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"
+                                } text-white px-4 py-2 rounded-lg transition`}
+                            onClick={(e) => handleAddToCart(e, item)}
+                            disabled={!availability || isItemInCart}
+                        >
+                            {isItemInCart ? "Added to Cart" : availability ? "Add to Cart" : "Out of Stock"}
+                        </button>
+                        : ""}
                     {userRole === "merchant" ?
                         <>
                             <button
