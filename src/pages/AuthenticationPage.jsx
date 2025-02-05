@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router";
 import { setCurrentUser } from "../slices/authSlice";
+import { setCart } from "../slices/cartSlice";
 
 const AUTH_LINK = import.meta.env.VITE_AUTH_API_URL;
 export const RegisterPage = () => {
@@ -97,10 +98,11 @@ export const LoginPage = () => {
     async function handleLogin(e) {
         e.preventDefault();
         try {
-            const res = await axios.post(`${AUTH_LINK}/auth/login`, {username,password});
+            const res = await axios.post(`${AUTH_LINK}/auth/login`, { username, password });
             localStorage.setItem("accessToken", res.data.access_token);
             localStorage.setItem("refreshToken", res.data.refreshToken);
-            dispatch(setCurrentUser({user: res.data.user}))
+            dispatch(setCurrentUser({ user: res.data.user }))
+            dispatch(setCart({ cart: res.data.user.cart }))
             navigate("/");
         } catch (err) {
             console.error(err.message);
