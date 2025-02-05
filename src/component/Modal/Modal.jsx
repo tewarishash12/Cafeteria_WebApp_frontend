@@ -10,7 +10,7 @@ function Modal({ isOpen, onClose, children }) {
         >
             <button
                 onClick={onClose}
-                className={`hover:text-gray-700 dark:hover:text-gray-300 absolute top-20 right-10`}
+                className={`hover:text-gray-800 hover:shadow-md absolute top-20 right-10`}
             >
                 <FaTimes />
             </button>
