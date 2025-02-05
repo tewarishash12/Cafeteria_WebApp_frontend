@@ -33,7 +33,7 @@ function AllUserList() {
             <div className="mb-6">
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="w-full bg-yellow-600 hover:bg-yellow-700 p-2 rounded"
+                    className="w-full bg-yellow-600 hover:bg-yellow-700 text-slate-100 p-2 rounded"
                 >
                     Manage User Roles
                 </button>
@@ -49,13 +49,12 @@ function AllUserList() {
                             {merchantList.map((merchant) => (
                                 <div
                                     key={merchant._id}
-                                    className="border border-gray-300 rounded-lg p-4 shadow-md bg-white dark:bg-gray-800"
+                                    className="border border-slate-700 rounded-lg p-4 shadow-md"
                                 >
                                     <h3 className="text-lg font-semibold">{merchant.username}</h3>
-                                    <p className="text-sm text-gray-700 dark:text-gray-300">Email: {merchant.email}</p>
-                                    <p className="text-sm text-gray-700 dark:text-gray-300">Phone: {merchant.phoneNo}</p>
+                                    <p className="text-sm">Email: {merchant.email}</p>
+                                    <p className="text-sm">Phone: {merchant.phoneNo}</p>
 
-                                    {/* Dropdown for role selection */}
                                     <select
                                         className="mt-2 p-2 border rounded w-full"
                                         value={merchant.role}
@@ -73,17 +72,17 @@ function AllUserList() {
                 </section>
 
                 <section className="mt-6">
-                    <h2 className="text-xl text-black font-semibold mb-2">Customers</h2>
+                    <h2 className="text-xl font-semibold mb-2">Customers</h2>
                     {customerList.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
                             {customerList.map((customer) => (
                                 <div
                                     key={customer._id}
-                                    className="border border-gray-300 rounded-lg p-4 shadow-md bg-white dark:bg-gray-800"
+                                    className="border border-slate-700 rounded-lg p-4 shadow-md"
                                 >
                                     <h3 className="text-lg font-semibold">{customer.username}</h3>
-                                    <p className="text-sm text-gray-700 dark:text-gray-300">Email: {customer.email}</p>
-                                    <p className="text-sm text-gray-700 dark:text-gray-300">Phone: {customer.phoneNo}</p>
+                                    <p className="text-sm">Email: {customer.email}</p>
+                                    <p className="text-sm">Phone: {customer.phoneNo}</p>
 
                                     {/* Dropdown for role selection */}
                                     <select

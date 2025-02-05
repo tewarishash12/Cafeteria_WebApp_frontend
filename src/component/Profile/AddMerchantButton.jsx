@@ -31,16 +31,16 @@ function AddMerchantButton() {
             <div className="mb-6">
                 <button
                 onClick={()=>setIsModalOpen(true)}
-                className="w-full bg-green-600 hover:bg-green-700 p-2 rounded">Create New Merchant
+                className="w-full text-slate-100 bg-green-600 hover:bg-green-700 p-2 rounded">Create New Merchant
                 </button>
             </div>
             {isModalOpen &&
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <form
                     onSubmit={handleSubmit}
-                    className="space-y-4 text-black">
+                    className="space-y-4">
                     <div>
-                        <h2 className='text-black text-2xl font-bold mb-4'>Add Merchant</h2>
+                        <h2 className='text-2xl font-bold mb-4'>Add Merchant</h2>
                         <label className="block text-sm font-medium">Username</label>
                         <input
                             type="text"
@@ -88,9 +88,7 @@ function AddMerchantButton() {
                 </form>
             </Modal>
             }
-
         </>
-
     )
 }
 
