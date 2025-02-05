@@ -17,9 +17,6 @@ function Sidebar() {
 
                 <AllUserList />
 
-                <div>
-                    <button className="w-full bg-gray-600 hover:bg-gray-700 p-2 rounded">View Users List</button>
-                </div>
             </SidebarModal>
         </div>
     )
