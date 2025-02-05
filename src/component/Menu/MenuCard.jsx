@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../slices/cartSlice";
 import Modal from "../Modal/Modal";
 import { removeMenuItem } from "../../slices/dishSlice";
@@ -9,9 +9,10 @@ import FoodForm from "./FoodForm";
 function MenuCard({ item }) {
     const dispatch = useDispatch();
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
-    const { _id, image,dish_name,description,price,availability, counter_id } = item;
+    const userRole = useSelector(state => state?.auth?.currentUser?.role);
+    const { _id, image, dish_name, description, price, availability, counter_id } = item;
 
-    const [isModalOpen,setIsModalOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedItem, setSelectedItem] = useState(null);
 
     async function handleAddToCart(e, food) {
@@ -36,8 +37,12 @@ function MenuCard({ item }) {
     }
 
     async function handleDelete(id) {
-        await axios.delete(`${MAIN_LINK}/dish/id/${id}`)
-        dispatch(removeMenuItem({ id: id }))
+        try {
+            await axios.delete(`${MAIN_LINK}/dish/id/${id}`)
+            dispatch(removeMenuItem({ id: id }))
+        } catch(err) {
+            console.error(err.message);
+        }
     }
 
     return (
@@ -58,25 +63,32 @@ function MenuCard({ item }) {
                     Shop: <span className="font-bold">{counter_id?.shop_name}</span>
                 </p>
                 <div className="flex flex-wrap gap-3 mt-4">
+                    {userRole==="customer" ? 
                     <button
-                        className={`${availability ? "bg-teal-600 hover:bg-teal-700 text-white cursor-pointer" : "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"} text-white  px-4 py-2 rounded-lg transition`}
-                        onClick={(e) => handleAddToCart(e, item)}
-                        disabled={!availability}
+                    className={`${availability ? "bg-teal-600 hover:bg-teal-700 text-white cursor-pointer" : "bg-gray-500 hover:bg-gray-600 cursor-not-allowed"} text-white  px-4 py-2 rounded-lg transition`}
+                    onClick={(e) => handleAddToCart(e, item)}
+                    disabled={!availability}
                     >
                         {availability ? "Add to Cart" : "Out of Stock"}
                     </button>
-                    <button
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
-                        onClick={() => handleEdit()}
-                    >
-                        Edit
-                    </button>
-                    <button
-                        className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg transition"
-                        onClick={() => handleDelete(_id)}
-                    >
-                        Delete
-                    </button>
+                    : ""}
+                    {userRole === "merchant" ?
+                        <>
+                            <button
+                                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
+                                onClick={() => handleEdit()}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                className="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg transition"
+                                onClick={() => handleDelete(_id)}
+                            >
+                                Delete
+                            </button>
+                        </>
+                        :
+                        ""}
                 </div>
             </div>
 

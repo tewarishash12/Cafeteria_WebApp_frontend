@@ -12,7 +12,8 @@ const Navbar = () => {
     const dispatch = useDispatch();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const length = useSelector(state => state?.cart?.items?.length || 0);
-    const user = useSelector(state => state.auth.currentUser);
+    const user = useSelector(state => state?.auth?.currentUser);
+
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -111,12 +112,15 @@ const Navbar = () => {
                                 >
                                     Logout
                                 </button>
+                                {user?.role ==="customer" ? 
                                 <NavLink to="/cart" className="flex relative">
                                     <FaShoppingBag />
                                     <span className="text-sm text-orange-50 bg-amber-700 rounded-full w-5 h-5 px-1.5 font-bold absolute -top-4 left-2">
                                         {length}
                                     </span>
                                 </NavLink>
+                                : 
+                                "" }
                             </>
                         ) : (
                             <>
@@ -185,6 +189,7 @@ const Navbar = () => {
                                 >
                                     Logout
                                 </button>
+
                                 <NavLink to="/cart" className="flex relative">
                                     Cart
                                     <span className="text-sm text-orange-50 bg-amber-700 rounded-full w-5 h-5 px-1.5 font-bold absolute -top-4 left-2">
