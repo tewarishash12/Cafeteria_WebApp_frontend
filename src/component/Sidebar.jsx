@@ -6,7 +6,7 @@ import AllUserList from './Profile/AllUserList'
 function Sidebar() {
 
     return (
-        <div className="fixed inset-0 transition-all">
+        <div className="transition-all">
             <SidebarModal>
 
                 <div className="mb-6">
