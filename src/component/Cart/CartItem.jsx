@@ -32,32 +32,32 @@ function CartItem({item, quantity}) {
     return (
         <div
             key={item?._id}
-            className="flex items-center justify-between border-b border-gray-700 py-4"
+            className="flex items-center justify-between border-b border-gray-800 py-4"
         >
             <img
                 src={item?.image} 
                 alt={item?.dish_name} 
-                className="w-16 h-16 object-cover rounded"
+                className="w-16 h-16 object-cover rounded-full"
             />
             <div className="flex-1 ml-4">
-                <h2 className="text-lg font-semibold text-white">{item?.dish_name}</h2>
-                <p className="text-sm text-gray-400">{item?.description}</p>
-                <p className="text-sm text-gray-400">₹{item?.price}</p>
+                <h2 className="text-lg font-semibold">{item?.dish_name}</h2>
+                <p className="text-sm">{item?.description}</p>
+                <p className="text-sm">₹{item?.price}</p>
             </div>
-            <p className="ml-4 text-lg font-semibold text-white">
+            <p className="ml-4 text-lg font-semibold">
                 ₹{(item?.price || 0) * quantity}
             </p>
             <div className="flex items-center">
                 <button
                     onClick={() => updateQuantity(-1, item?._id)}
-                    className="px-2 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition"
+                    className="px-2 py-1 text-medium bg-red-600 text-slate-300 rounded hover:bg-red-700 transition"
                 >
                     -
                 </button>
-                <span className="mx-2 text-white">{quantity || 0}</span>
+                <span className="mx-2">{quantity || 0}</span>
                 <button
                     onClick={() => updateQuantity(1, item?._id)}
-                    className="px-2 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 transition"
+                    className="px-2 py-1 text-medium bg-green-600 text-slate-300 rounded hover:bg-green-700 transition"
                 >
                     +
                 </button>

@@ -11,7 +11,7 @@ function CartPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen">
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
         <div className="flex flex-col md:flex-row gap-4">

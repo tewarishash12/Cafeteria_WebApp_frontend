@@ -2,7 +2,7 @@ import React from "react";
 
 const Subtotal = ({ subtotal }) => {
     return (
-        <div className="w-full md:w-1/3 bg-gray-800 p-4 rounded-lg shadow-lg">
+        <div className="w-full md:w-1/3 p-4 rounded-lg shadow-lg">
             <h2 className="text-lg font-semibold mb-4">Summary</h2>
             <div className="flex justify-between mb-2">
                 <span>Subtotal</span>
