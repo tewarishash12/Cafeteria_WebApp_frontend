@@ -38,7 +38,9 @@ function MenuCard({ item }) {
 
     async function handleDelete(id) {
         try {
-            await axios.delete(`${MAIN_LINK}/dish/id/${id}`)
+            await axios.delete(`${MAIN_LINK}/dish/id/${id}`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+            })
             dispatch(removeMenuItem({ id: id }))
         } catch(err) {
             console.error(err.message);

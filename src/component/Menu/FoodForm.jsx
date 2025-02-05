@@ -19,10 +19,17 @@ function FoodForm({ onClose, itemData = null }) {
         try {
             let res;
             if (!itemData) {
-                res = await axios.post(`${MAIN_LINK}/dish`, { dish_name: dishName, description: description, image: image, availability: availability, counter_id: counterId, price: price });
+                res = await axios.post(`${MAIN_LINK}/dish`, { dish_name: dishName, description: description, image: image, availability: availability, counter_id: counterId, price: price },
+                    {
+                        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
+                    }
+                );
             } else {
-                res = await axios.put(`${MAIN_LINK}/dish/id/${itemData._id}`, { dish_name: dishName, description: description, price: price, availability: availability, image: image })
-                console.log(res?.data?.dishes)
+                res = await axios.put(`${MAIN_LINK}/dish/id/${itemData._id}`, { dish_name: dishName, description: description, price: price, availability: availability, image: image },
+                    {
+                        headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
+                    }
+                );
             }
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
         } catch (err) {
