@@ -22,7 +22,9 @@ function CounterCard({ counter }) {
 
     async function deleteCounter(id) {
         try {
-            const res = await axios.delete(`${MAIN_LINK}/counter/id/${id}`);
+            const res = await axios.delete(`${MAIN_LINK}/counter/id/${id}`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
+            });
             dispatch(removeCounter({ id: id }))
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
         } catch (err) {

@@ -42,6 +42,8 @@ function CounterForm({ onClose, counterData = null }) {
                     hours: hours,
                     description: description,
                     isActive: isActive
+                } , {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
                 });
             } else {
                 res = await axios.put(`${MAIN_LINK}/counter/id/${counterData._id}`, {
@@ -50,6 +52,8 @@ function CounterForm({ onClose, counterData = null }) {
                     hours: hours,
                     description: description,
                     isActive: isActive
+                } ,{
+                    headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
                 });
                 dispatch(setCompleteMenu({ menu: res?.data?.dishes }));
             }
