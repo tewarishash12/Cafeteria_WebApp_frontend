@@ -101,7 +101,6 @@ export const LoginPage = () => {
             localStorage.setItem("accessToken", res.data.access_token);
             localStorage.setItem("refreshToken", res.data.refreshToken);
             dispatch(setCurrentUser({user: res.data.user}))
-            console.log(res.data)
             navigate("/");
         } catch (err) {
             console.error(err.message);
