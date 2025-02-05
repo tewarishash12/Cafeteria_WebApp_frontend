@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import Modal from '../Modal/Modal';
+import EditProfileForm from './EditProfileForm';
 
 function ProfileInformation() {
-    const userInfo = useSelector(state => state.auth.currentUser);
+    const userInfo = useSelector(state => state?.auth?.currentUser);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <div className="bg-slate-200 p-6 rounded-lg shadow-lg w-96">
@@ -32,8 +35,21 @@ function ProfileInformation() {
                 </p>
             </div>
 
+            <div className='mt-6'>
+                <button
+                    onClick={()=>setIsModalOpen(true)}
+                    className="w-full text-slate-100 bg-green-600 hover:bg-green-900 p-2 rounded">
+                    Edit Profile
+                </button>
+            </div>
+
+            {isModalOpen && (
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    <EditProfileForm userInfo={userInfo} onClose={() => setIsModalOpen(false)} />
+                </Modal>
+            )}
         </div>
-    )
+    );
 }
 
-export default ProfileInformation
+export default ProfileInformation;
