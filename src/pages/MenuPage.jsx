@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import MenuCard from "../component/Menu/MenuCard";
 import FoodForm from "../component/Menu/FoodForm";
 import Modal from "../component/Modal/Modal";
-import MenuSkeleton from "../component/Menu/MenuSkeleton"; // Import the skeleton component
+import MenuSkeleton from "../component/Menu/MenuSkeleton";
 
 function MenuPage() {
     const menuItems = useSelector(state => state?.dish?.fullMenu);
@@ -12,13 +12,12 @@ function MenuPage() {
 
     const [loading, setLoading] = useState(true);
 
-    // Simulating an API call with a timeout for loading skeleton
     useEffect(() => {
         if (!menuItems.length) {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
-            }, 2000); // Simulate loading for 2 seconds, you can adjust based on your actual loading time
+            }, 2000); 
         } else {
             setLoading(false);
         }
@@ -39,7 +38,6 @@ function MenuPage() {
 
                 {loading
                     ? (
-                        // Show skeleton loaders while menuItems are loading
                         Array.from({ length: 4 }).map((_, index) => (
                             <MenuSkeleton key={index} />
                         ))

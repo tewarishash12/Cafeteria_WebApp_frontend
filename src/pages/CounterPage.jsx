@@ -33,7 +33,6 @@ function CounterPage() {
                     </button>
                 )}
 
-                {/* Show Skeleton Cards while loading */}
                 {loading
                     ? [...Array(3)].map((_, index) => <CounterSkeleton key={index} />)
                     : counters?.map((counter) => (
