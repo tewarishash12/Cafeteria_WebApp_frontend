@@ -17,8 +17,9 @@ export default function Carousel() {
 
     const slides = [
         "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbTuci7GSyrDVSHSR8XSUuxv6quu2c1bwd1Q&s",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEMuYNhe_lYba1wLikBS0n34LRwU3GuDH0Gw&s",
+        "https://www.shutterstock.com/image-photo/background-food-dishes-european-cuisine-260nw-2490284951.jpg",
+        "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?cs=srgb&dl=pexels-chanwalrus-958545.jpg&fm=jpg",
+        "https://media.gettyimages.com/id/1438016630/photo/medium-overhead-shot-of-families-sharing-dinner-at-outdoor-restaurant.jpg?s=612x612&w=gi&k=20&c=xf2riYkf-miHooKcMR-RRKaYPdI9vNFo1xfKv0fLS_c=",
     ];
 
     return (
