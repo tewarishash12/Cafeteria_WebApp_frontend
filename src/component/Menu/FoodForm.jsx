@@ -4,15 +4,23 @@ import { setCompleteMenu } from '../../slices/dishSlice';
 import axios from 'axios';
 
 function FoodForm({ onClose, itemData = null }) {
-    const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
-    const counters = useSelector(state => state.counter.allCounters);
     const dispatch = useDispatch();
+    const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
+    const userId = useSelector(state => state?.auth?.currentUser?._id)
+    const counters = useSelector(state => state?.counter?.allCounters);
+    const merchantCounter = counters?.
+    filter(counter =>{
+        console.log(counter)
+        return counter?.merchant_id?.
+        some(merchant =>{
+            return merchant?._id === userId
+        })});
     const [dishName, setDishName] = useState(itemData?.dish_name || '')
     const [description, setDescription] = useState(itemData?.description || '')
     const [image, setImage] = useState(itemData?.image || '')
     const [price, setPrice] = useState(itemData?.price || '')
     const [availability, setAvailability] = useState(itemData?.availability && true)
-    const [counterId, setCounterId] = useState(itemData?.counter_id._id || '')
+    const [counterId, setCounterId] = useState(itemData?.counter_id?._id || '')
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -110,7 +118,7 @@ function FoodForm({ onClose, itemData = null }) {
                         <option value="" selected hidden>
                             Select Counter
                         </option>
-                        {counters.map((counter) => (
+                        {merchantCounter.map((counter) => (
                             <option key={counter._id} value={counter._id}>
                                 {counter.shop_name}
                             </option>
