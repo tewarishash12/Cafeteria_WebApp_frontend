@@ -9,20 +9,25 @@ import FoodForm from "./FoodForm";
 function MenuCard({ item }) {
     const dispatch = useDispatch();
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
-    const userRole = useSelector(state => state?.auth?.currentUser?.role);
-    const cartItems = useSelector(state => state?.cart?.items);
-    const { _id, image, dish_name, description, price, availability, counter_id } = item;
+    
+    const user = useSelector(state => state?.auth?.currentUser);
+    const userId = user?._id; 
+    const userRole = user?.role; 
 
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const { _id, image, dish_name, description, price, availability, counter_id } = item;
+    const counterMerchantId = counter_id?.merchant_id;
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
-    const isItemInCart = cartItems.some(({item}) =>item._id === _id);
+    const cartItems = useSelector(state => state?.cart?.items);
+    const isItemInCart = cartItems.some(({ item }) => item._id === _id);
 
     async function handleAddToCart(e, food) {
         e.preventDefault();
         try {
             dispatch(addItem({ food: food }));
-            const res = await axios.patch(
+            await axios.patch(
                 `${MAIN_LINK}/cart/addtocart`,
                 { dish_id: food._id },
                 {
@@ -35,7 +40,7 @@ function MenuCard({ item }) {
     }
 
     function handleEdit() {
-        setSelectedItem(item)
+        setSelectedItem(item);
         setIsModalOpen(true);
     }
 
@@ -43,8 +48,8 @@ function MenuCard({ item }) {
         try {
             await axios.delete(`${MAIN_LINK}/dish/id/${id}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-            })
-            dispatch(removeMenuItem({ id: id }))
+            });
+            dispatch(removeMenuItem({ id: id }));
         } catch (err) {
             console.error(err.message);
         }
@@ -68,7 +73,7 @@ function MenuCard({ item }) {
                     Shop: <span className="font-bold">{counter_id?.shop_name}</span>
                 </p>
                 <div className="flex flex-wrap gap-3 mt-4">
-                    {userRole === "customer" ?
+                    {userRole === "customer" && (
                         <button
                             className={`${isItemInCart
                                 ? "bg-cyan-800 text-white cursor-not-allowed"
@@ -81,8 +86,9 @@ function MenuCard({ item }) {
                         >
                             {isItemInCart ? "Added to Cart" : availability ? "Add to Cart" : "Out of Stock"}
                         </button>
-                        : ""}
-                    {userRole === "merchant" ?
+                    )}
+
+                    {userRole === "merchant" && counterMerchantId.includes(userId) && (
                         <>
                             <button
                                 className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
@@ -97,8 +103,7 @@ function MenuCard({ item }) {
                                 Delete
                             </button>
                         </>
-                        :
-                        ""}
+                    )}
                 </div>
             </div>
 
