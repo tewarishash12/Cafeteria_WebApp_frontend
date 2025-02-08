@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCounters } from "../../slices/counterSlice";
+import { setCounters, updateCounter } from "../../slices/counterSlice";
 import { setCompleteMenu } from "../../slices/dishSlice";
 
 function CounterForm({ onClose, counterData = null }) {
@@ -32,32 +32,30 @@ function CounterForm({ onClose, counterData = null }) {
                 alert("Please select at least one merchant before submitting.");
                 return;
             }
+
+            const newCounter = {
+                merchant_id: selectedMerchants,
+                shop_name: shopName,
+                image: image,
+                hours: hours,
+                description: description,
+                isActive: isActive
+            };
             
             let res;
             if (!counterData) {
-                res = await axios.post(`${MAIN_LINK}/counter`, {
-                    merchant_id: selectedMerchants,
-                    shop_name: shopName,
-                    image: image,
-                    hours: hours,
-                    description: description,
-                    isActive: isActive
-                } , {
+                res = await axios.post(`${MAIN_LINK}/counter`, newCounter , {
                     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
                 });
+                dispatch(setCounters({ counters: res?.data?.counters }));
             } else {
-                res = await axios.put(`${MAIN_LINK}/counter/id/${counterData._id}`, {
-                    shop_name: shopName,
-                    image: image,
-                    hours: hours,
-                    description: description,
-                    isActive: isActive
-                } ,{
+                newCounter._id = counterData._id
+                dispatch(updateCounter({counter: newCounter}))
+                res = await axios.put(`${MAIN_LINK}/counter/id/${counterData._id}`, newCounter ,{
                     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
                 });
                 dispatch(setCompleteMenu({ menu: res?.data?.dishes }));
             }
-            dispatch(setCounters({ counters: res?.data?.counters }));
         } catch (err) {
             console.error(err.message);
         } finally {

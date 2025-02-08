@@ -40,7 +40,6 @@ export function APIProvider({children}) {
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
         } catch (err) {
             console.error(err.message);
-            setError(err.message);
         }
     }
 
