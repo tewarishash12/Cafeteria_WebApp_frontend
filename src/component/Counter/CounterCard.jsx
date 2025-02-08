@@ -10,7 +10,7 @@ function CounterCard({ counter }) {
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
     const dispatch = useDispatch();
     const { shop_name, image, hours, description, isActive } = counter;
-    const userRole = useSelector(state => state?.auth?.currentUser?.role);
+    const user = useSelector(state => state?.auth?.currentUser);
 
     const [selectedCounter, setSelectedCounter] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,8 +29,9 @@ function CounterCard({ counter }) {
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
         } catch (err) {
             console.error(err.message)
+        } finally {
+            setIsModalOpen(false);
         }
-        setIsModalOpen(false);
     }
 
     return (
@@ -55,24 +56,24 @@ function CounterCard({ counter }) {
             <p className="text-sm mb-2"><strong>Hours:</strong> {hours}</p>
             <p className="text-sm mb-4"><strong>Description:</strong> {description}</p>
             <div className="flex py-1 px-3 rounded-md text-medium gap-2 mt-2">
-                {userRole === "admin" ?
-                <>
+                {(user.role === "admin" || (user.role === "merchant" && counter?.merchant_id?.some((merchant) => merchant?._id === user._id))) && (
                     <button
                         onClick={() => handleUpdate()}
                         className="border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-3 py-1 font-medium rounded-md"
                     >
                         Edit
                     </button>
+                )}
+
+                {user.role === "admin" && (
                     <button
                         onClick={() => deleteCounter(counter._id)}
                         className="border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-3 py-1 font-medium rounded-md"
                     >
                         Delete
                     </button>
-                </>
-                :
-                ""
-                }
+                )}
+
             </div>
             {isModalOpen && (
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>

@@ -7,7 +7,6 @@ import CounterSkeleton from "../component/Counter/CounterSkeleton";
 
 function CounterPage() {
     const counters = useSelector((state) => state?.counter?.allCounters);
-    console.log(counters[1]?.merchant_id[0]?._id);
     const user = useSelector((state) => state?.auth?.currentUser);
     const userRole = user?.role;
 
@@ -34,7 +33,6 @@ function CounterPage() {
         <div className="p-4">
             <h1 className="text-3xl text-center font-bold mb-4">Counters</h1>
 
-            {/* Toggle buttons for merchants */}
             {userRole === "merchant" && (
                 <div className="flex justify-center gap-4 mb-4">
                     <button
@@ -52,7 +50,6 @@ function CounterPage() {
                 </div>
             )}
 
-            {/* Add Counter Button for Admins */}
             {userRole === "admin" && (
                 <button
                     onClick={() => setIsModalOpen(true)}

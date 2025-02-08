@@ -9,7 +9,7 @@ function CounterForm({ onClose, counterData = null }) {
     const merchantInfo = useSelector(state => state.user.merchantList);
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
     
-    const [selectedMerchants, setSelectedMerchants] = useState([]);
+    const [selectedMerchants, setSelectedMerchants] = useState(counterData?.merchant_id || []);
     const [shopName, setShopName] = useState(counterData?.shop_name || '');
     const [image, setImage] = useState(counterData?.image || '');
     const [hours, setHours] = useState(counterData?.hours || '');
@@ -51,7 +51,7 @@ function CounterForm({ onClose, counterData = null }) {
             } else {
                 newCounter._id = counterData._id
                 dispatch(updateCounter({counter: newCounter}))
-                res = await axios.put(`${MAIN_LINK}/counter/id/${counterData._id}`, newCounter ,{
+                res = await axios.patch(`${MAIN_LINK}/counter/id/${counterData._id}`, newCounter ,{
                     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
                 });
                 dispatch(setCompleteMenu({ menu: res?.data?.dishes }));
