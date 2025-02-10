@@ -5,14 +5,15 @@ import { addItem } from "../../slices/cartSlice";
 import Modal from "../Modal/Modal";
 import { removeMenuItem } from "../../slices/dishSlice";
 import FoodForm from "./FoodForm";
+import { toast } from "react-toastify";
 
 function MenuCard({ item }) {
     const dispatch = useDispatch();
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
-    
+
     const user = useSelector(state => state?.auth?.currentUser);
-    const userId = user?._id; 
-    const userRole = user?.role; 
+    const userId = user?._id;
+    const userRole = user?.role;
 
     const { _id, image, dish_name, description, price, availability, counter_id } = item;
     const counterMerchantId = counter_id?.merchant_id;
@@ -34,8 +35,10 @@ function MenuCard({ item }) {
                     headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
                 }
             );
+            toast.success("Item added to cart Successfully!", { position: "top-right", autoClose: 3000 });
         } catch (err) {
             console.error(err.message);
+            toast.error("Log into website before adding items to cart", { position: "top-right", autoClose: 3000 });
         }
     }
 
@@ -50,8 +53,10 @@ function MenuCard({ item }) {
                 headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
             });
             dispatch(removeMenuItem({ id: id }));
+            toast.success("Item deleted from Counter!", { position: "top-right", autoClose: 3000 });
         } catch (err) {
             console.error(err.message);
+            toast.error("Some unforseen error occured", { position: "top-right", autoClose: 3000 });
         }
     }
 

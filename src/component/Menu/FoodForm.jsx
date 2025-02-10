@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCompleteMenu } from '../../slices/dishSlice';
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 function FoodForm({ onClose, itemData = null }) {
     const dispatch = useDispatch();
@@ -9,12 +10,12 @@ function FoodForm({ onClose, itemData = null }) {
     const userId = useSelector(state => state?.auth?.currentUser?._id)
     const counters = useSelector(state => state?.counter?.allCounters);
     const merchantCounter = counters?.
-    filter(counter =>{
-        console.log(counter)
-        return counter?.merchant_id?.
-        some(merchant =>{
-            return merchant?._id === userId
-        })});
+        filter(counter => 
+            counter?.merchant_id?.
+            some(merchant => 
+                merchant?._id === userId
+            )
+        );
     const [dishName, setDishName] = useState(itemData?.dish_name || '')
     const [description, setDescription] = useState(itemData?.description || '')
     const [image, setImage] = useState(itemData?.image || '')
@@ -32,18 +33,23 @@ function FoodForm({ onClose, itemData = null }) {
                         headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
                     }
                 );
+                toast.success("Menu Item added to counter successfully!", { position: "top-right", autoClose: 3000 });
             } else {
                 res = await axios.put(`${MAIN_LINK}/dish/id/${itemData._id}`, { dish_name: dishName, description: description, price: price, availability: availability, image: image },
                     {
                         headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
                     }
                 );
+                toast.success("Menu Item updated successfully!", { position: "top-right", autoClose: 3000 });
             }
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
         } catch (err) {
             console.error(err.message);
+            toast.error("Some unforseen error occured", { position: "top-right", autoClose: 3000 });
         } finally {
-            onClose();
+            setTimeout(() => {
+                onClose();
+            }, 3000);
         }
     }
 

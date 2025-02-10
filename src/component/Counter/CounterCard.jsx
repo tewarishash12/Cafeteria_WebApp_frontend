@@ -30,7 +30,8 @@ function CounterCard({ counter }) {
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
             toast.success("Counter deleted successfully, along with it's dishes!", { position: "top-right", autoClose: 3000 });
         } catch (err) {
-            console.error(err.message)
+            console.error(err.message);
+            toast.error("Some unforseen error occured", { position: "top-right", autoClose: 3000 });
         }
     }
 
