@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { allUsersList, setCustomers, setMerchants } from "../../slices/userSlice";
+import { setCustomers, setMerchants } from "../../slices/userSlice";
 import Modal from "../Modal/Modal";
-
-const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
+import { toast } from "react-toastify";
 
 function AllUserList() {
     const dispatch = useDispatch();
@@ -23,6 +22,7 @@ function AllUserList() {
                 dispatch(setCustomers({id:id}))
             else
                 dispatch(setMerchants({id:id}))
+                toast.success("Role updated", { position: "top-right", autoClose: 1000 });
         } catch(err) {
             console.error(err.message);
         }
@@ -84,7 +84,6 @@ function AllUserList() {
                                     <p className="text-sm">Email: {customer.email}</p>
                                     <p className="text-sm">Phone: {customer.phoneNo}</p>
 
-                                    {/* Dropdown for role selection */}
                                     <select
                                         className="mt-2 p-2 border rounded w-full"
                                         value={customer.role}

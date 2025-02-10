@@ -24,7 +24,7 @@ function EditProfileForm({ onClose,userInfo }) {
             toast.success("User details updated successfully", { position: "top-right", autoClose: 3000 });
         } catch(err) {
             console.error(err.message);
-            toast.error("User details updated successfully", { position: "top-right", autoClose: 3000 });
+            toast.error("Something unexpected happened", { position: "top-right", autoClose: 3000 });
         } finally {
             onClose();
         }
