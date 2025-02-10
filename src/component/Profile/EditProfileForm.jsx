@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../../slices/authSlice';
+import { toast } from 'react-toastify';
 
 function EditProfileForm({ onClose,userInfo }) {
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
@@ -20,8 +21,10 @@ function EditProfileForm({ onClose,userInfo }) {
                 headers : {Authorization : `Bearer ${localStorage.getItem('accessToken')}`}
             });
             dispatch(setCurrentUser({user: res?.data?.user}))
+            toast.success("User details updated successfully", { position: "top-right", autoClose: 3000 });
         } catch(err) {
             console.error(err.message);
+            toast.error("User details updated successfully", { position: "top-right", autoClose: 3000 });
         } finally {
             onClose();
         }
