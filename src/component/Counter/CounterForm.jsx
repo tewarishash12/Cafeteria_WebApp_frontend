@@ -3,12 +3,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCounters, updateCounter } from "../../slices/counterSlice";
 import { setCompleteMenu } from "../../slices/dishSlice";
+import { toast } from "react-toastify";
 
 function CounterForm({ onClose, counterData = null }) {
     const dispatch = useDispatch();
     const merchantInfo = useSelector(state => state.user.merchantList);
     const MAIN_LINK = import.meta.env.VITE_MAIN_API_URL;
-    
+
     const [selectedMerchants, setSelectedMerchants] = useState(counterData?.merchant_id || []);
     const [shopName, setShopName] = useState(counterData?.shop_name || '');
     const [image, setImage] = useState(counterData?.image || '');
@@ -41,23 +42,26 @@ function CounterForm({ onClose, counterData = null }) {
                 description: description,
                 isActive: isActive
             };
-            
+
             let res;
             if (!counterData) {
-                res = await axios.post(`${MAIN_LINK}/counter`, newCounter , {
+                res = await axios.post(`${MAIN_LINK}/counter`, newCounter, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
                 });
                 dispatch(setCounters({ counters: res?.data?.counters }));
+                toast.success("Counter added successfully!", { position: "top-right", autoClose: 3000 });
             } else {
                 newCounter._id = counterData._id
-                dispatch(updateCounter({counter: newCounter}))
-                res = await axios.patch(`${MAIN_LINK}/counter/id/${counterData._id}`, newCounter ,{
+                dispatch(updateCounter({ counter: newCounter }))
+                res = await axios.patch(`${MAIN_LINK}/counter/id/${counterData._id}`, newCounter, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
                 });
                 dispatch(setCompleteMenu({ menu: res?.data?.dishes }));
+                toast.success("Counter updated successfully!", { position: "top-right", autoClose: 3000 });
             }
         } catch (err) {
             console.error(err.message);
+            toast.error("Something went wrong. Please try again.", { position: "top-center", autoClose: 3000 });
         } finally {
             onClose();
         }

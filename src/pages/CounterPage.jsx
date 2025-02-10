@@ -50,22 +50,25 @@ function CounterPage() {
                 </div>
             )}
 
-            {userRole === "admin" && (
-                <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="border-l-4 border-blue-600 rounded-lg shadow-md bg-slate-200 flex items-center justify-center hover:shadow-xl hover:bg-slate-300"
-                >
-                    <span className="text-2xl font-bold">Add Counter</span>
-                </button>
-            )}
-
-            {/* Counter Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {loading
                     ? [...Array(3)].map((_, index) => <CounterSkeleton key={index} />)
-                    : displayedCounters?.map((counter) => (
-                        <CounterCard key={counter?._id} counter={counter} />
-                    ))}
+                    : (
+                        <>
+                            {userRole === "admin" && (
+                                <button
+                                    onClick={() => setIsModalOpen(true)}
+                                    className="border-l-4 border-blue-600 rounded-lg shadow-md bg-slate-200 flex items-center justify-center hover:shadow-xl hover:bg-slate-300 p-4"
+                                >
+                                    <span className="text-2xl font-bold">Add Counter</span>
+                                </button>
+                            )}
+
+                            {displayedCounters?.map((counter) => (
+                                <CounterCard key={counter?._id} counter={counter} />
+                            ))}
+                        </>
+                    )}
             </div>
 
             {/* Modal for Adding Counter */}

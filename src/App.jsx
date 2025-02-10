@@ -5,6 +5,8 @@ import CartPage from './pages/CartPage'
 import CounterPage from './pages/CounterPage'
 import MenuPage from './pages/MenuPage'
 import { LoginPage, RegisterPage } from './pages/AuthenticationPage'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from './component/Navbar'
 import ProfilePage from './pages/ProfilePage'
 import { APIProvider } from "./context/APIProvider";
@@ -23,6 +25,7 @@ function App() {
         <APIProvider>
             <div className="bg-blue-50 min-h-screen text-gray-700">
                 <BrowserRouter>
+                <ToastContainer />
                     <Routes>
                         <Route path="/" element={layout(<Homepage />)} />
                         <Route path="/cart" element={layout(<CartPage />)} />
