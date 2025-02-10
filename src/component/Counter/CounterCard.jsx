@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeCounter } from '../../slices/counterSlice';
 import { setCompleteMenu } from '../../slices/dishSlice';
+import { toast } from "react-toastify";
 import CounterForm from './CounterForm';
 
 function CounterCard({ counter }) {
@@ -27,10 +28,9 @@ function CounterCard({ counter }) {
             });
             dispatch(removeCounter({ id: id }))
             dispatch(setCompleteMenu({ menu: res.data.dishes }));
+            toast.success("Counter deleted successfully, along with it's dishes!", { position: "top-right", autoClose: 3000 });
         } catch (err) {
             console.error(err.message)
-        } finally {
-            setIsModalOpen(false);
         }
     }
 
