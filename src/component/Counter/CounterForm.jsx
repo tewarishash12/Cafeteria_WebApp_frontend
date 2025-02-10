@@ -63,7 +63,7 @@ function CounterForm({ onClose, counterData = null }) {
             console.error(err.message);
             toast.error("Something went wrong. Please try again.", { position: "top-center", autoClose: 3000 });
         } finally {
-            onClose();
+            setTimeout(()=> onClose(), 3000)
         }
     }
 
